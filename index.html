@@ -1,11 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Lee 的个人博客</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inchel214 的技术博客</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <h1>欢迎来到我的博客！</h1>
-  <p>这是我的第一个 GitHub Pages 网站。</p>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">Inchel214</a>
+      <nav class="main-nav">
+        <a href="#posts">文章</a>
+        <a href="#about">关于</a>
+        <a href="#projects">项目</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>技术 · 思考 · 实践</h1>
+        <p class="lead">记录后端、前端与工程实践中的知识与思考。欢迎阅读、反馈与讨论。</p>
+        <p><a class="cta" href="#posts">查看最新文章</a></p>
+      </div>
+      <div class="hero-illus" aria-hidden="true">
+        <!-- 简单 SVG 作为装饰性图像 -->
+        <svg width="240" height="160" viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0%" stop-color="#6C5CE7" />
+              <stop offset="100%" stop-color="#00B894" />
+            </linearGradient>
+          </defs>
+          <rect rx="12" width="240" height="160" fill="url(#g)" />
+        </svg>
+      </div>
+    </section>
+
+    <section id="posts" class="posts-grid">
+      <h2 class="section-title">最新文章</h2>
+      <div class="grid">
+        <article class="post-card">
+          <div class="thumb">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <rect width="100" height="60" fill="#dfe6e9"></rect>
+            </svg>
+          </div>
+          <div class="post-body">
+            <h3>如何设计高可用的微服务架构</h3>
+            <p class="meta">2025-10-20 · 架构 · 后端</p>
+            <p class="excerpt">介绍构建高可用微服务的关键原则：容错、自动化、合理的分片与失效隔离策略。</p>
+            <a class="read-more" href="#">阅读全文 →</a>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="thumb">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <rect width="100" height="60" fill="#ffeaa7"></rect>
+            </svg>
+          </div>
+          <div class="post-body">
+            <h3>从零开始搭建静态博客并部署到 GitHub Pages</h3>
+            <p class="meta">2025-09-05 · 工具链 · 部署</p>
+            <p class="excerpt">一步步讲解如何用简单的工具链搭建、定制并通过 GitHub Actions 自动部署静态博客。</p>
+            <a class="read-more" href="#">阅读全文 →</a>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="thumb">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <rect width="100" height="60" fill="#74b9ff"></rect>
+            </svg>
+          </div>
+          <div class="post-body">
+            <h3>性能调优：从定位到落地的实践方法</h3>
+            <p class="meta">2025-08-12 · 性能 · 运维</p>
+            <p class="excerpt">分享一套可复用的性能调优流程：监控->分析->实验->回归，包含常见工具与案例。</p>
+            <a class="read-more" href="#">阅读全文 →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <section id="about" class="card">
+        <h3>关于我</h3>
+        <p>你好，我是 Inchel（Lee），从事软件工程多年，关注系统设计、后端与工程化实践。这里记录我学到的东西与思考。</p>
+      </section>
+
+      <section id="projects" class="card">
+        <h3>热门项目</h3>
+        <ul>
+          <li><a href="#">项目 A — 分布式任务调度</a></li>
+          <li><a href="#">项目 B — 可观测性仪表盘</a></li>
+        </ul>
+      </section>
+
+      <section id="contact" class="card">
+        <h3>订阅与联系</h3>
+        <p>关注 RSS 或通过 GitHub 给我发消息。</p>
+        <p><a href="#">RSS</a> · <a href="https://github.com/Inchel214">GitHub</a></p>
+      </section>
+    </aside>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Inchel214 — 技术博客。基于静态站点生成与 GitHub Pages 部署。</p>
+    </div>
+  </footer>
+
 </body>
 </html>
