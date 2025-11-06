@@ -17,25 +17,7 @@ POSTS_DIR = ROOT / 'posts'
 OUT_DIR = ROOT / 'public'
 ASSETS_DIR = ROOT / 'assets'
 
-TEMPLATE_PAGE = '''<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{title}</title>
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-  <div class="container">
-    <a href="./index.html" style="text-decoration:none;color:inherit"><h1>Inchel214 的技术博客</h1></a>
-    <hr>
-    {content}
-    <hr>
-    <footer>生成于 {time}</footer>
-  </div>
-</body>
-</html>
-'''
+TEMPLATE_PAGE = None  # 保留为兼容老代码；当前构建会尝试读取根目录的 index.html 作为模板
 
 
 def slugify(name: str) -> str:
@@ -89,21 +71,73 @@ def build():
 
     posts_out = OUT_DIR / 'posts'
     posts_out.mkdir(parents=True, exist_ok=True)
-
     posts_index = []
     for md in sorted(POSTS_DIR.glob('*.md')):
         title, date, html = parse_markdown(md)
         slug = slugify(md.stem)
         out_file = posts_out / f"{slug}.html"
-        page = TEMPLATE_PAGE.format(title=title, content=f"<article>\n{html}\n</article>", time=datetime.utcnow().isoformat())
-        out_file.write_text(page, encoding='utf-8')
+
+        # 为单篇文章使用一个简单模板（避免复杂依赖）
+        article_page = f'''<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{title}</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="container article-content">
+    <a href="../index.html" style="text-decoration:none;color:inherit"><h1>Inchel214 的技术博客</h1></a>
+    <hr>
+    <article>
+{html}
+    </article>
+    <hr>
+    <footer>生成于 {datetime.utcnow().isoformat()}</footer>
+  </div>
+</body>
+</html>
+'''
+
+        out_file.write_text(article_page, encoding='utf-8')
         posts_index.append({'title': title, 'date': date or '', 'url': f'posts/{slug}.html'})
 
-    # 生成首页（简单列表）
-    list_items = '\n'.join(f"<li><a href='./{p['url']}'>{p['title']}</a> <small style='color:#9aa4b2'>{p['date']}</small></li>" for p in posts_index)
-    index_content = f"<h2>最新文章</h2>\n<ul>\n{list_items}\n</ul>"
-    index_page = TEMPLATE_PAGE.format(title='Inchel214 的技术博客', content=index_content, time=datetime.utcnow().isoformat())
-    (OUT_DIR / 'index.html').write_text(index_page, encoding='utf-8')
+    # 生成首页：优先使用仓库根的 index.html 作为模板并注入文章卡片
+    # 把文章渲染为与根站点一致的卡片列表 HTML
+    cards = []
+    for p in posts_index:
+        cards.append(f"""
+<article class="post-card">
+  <div class="thumb">
+    <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <rect width="100" height="60" fill="#dfe6e9"></rect>
+    </svg>
+  </div>
+  <div class="post-body">
+    <h3>{p['title']}</h3>
+    <p class="meta">{p['date']}</p>
+    <a class="read-more" href="./{p['url']}">阅读全文 →</a>
+  </div>
+</article>
+""")
+
+    cards_html = '\n'.join(cards)
+    posts_section = f"<section id=\"posts\" class=\"posts-grid\">\n  <h2 class=\"section-title\">最新文章</h2>\n  <div class=\"grid\">\n{cards_html}\n  </div>\n</section>"
+
+    index_template_path = ROOT / 'index.html'
+    if index_template_path.exists():
+        template_text = index_template_path.read_text(encoding='utf-8')
+        if '<!-- CONTENT -->' in template_text:
+            out_index = template_text.replace('<!-- CONTENT -->', posts_section)
+        else:
+            # 如果没找到占位标记，简单把 posts_section 添加到末尾的 main 容器前
+            out_index = template_text.replace('</main>', posts_section + '\n</main>')
+    else:
+        # 回退到简单页（不会出现通常情况）
+        out_index = f"<!doctype html><html><body>{posts_section}</body></html>"
+
+    (OUT_DIR / 'index.html').write_text(out_index, encoding='utf-8')
 
     print('构建完成 ->', OUT_DIR)
 
