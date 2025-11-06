@@ -1,0 +1,27 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+{%- set siteUrl = (site.url or '') | trim('/') -%}
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ siteUrl }}/</link>
+    <description>{{ site.description }}</description>
+    <language>{{ site.language or 'zh-CN' }}</language>
+    {% for post in collections.posts | reverse %}
+      <item>
+        <title>{{ post.data.title | xmlEscape }}</title>
+        <link>{{ siteUrl }}{{ post.url }}</link>
+        <guid isPermaLink="true">{{ siteUrl }}{{ post.url }}</guid>
+        <pubDate>{{ post.date | date('ddd, DD MMM YYYY HH:mm:ss Z') }}</pubDate>
+        {% if post.data.excerpt %}
+        <description>{{ post.data.excerpt | xmlEscape }}</description>
+        {% else %}
+        <description>{{ post.templateContent | striptags | truncate(200) | xmlEscape }}</description>
+        {% endif %}
+      </item>
+    {% endfor %}
+  </channel>
+</rss>

@@ -5,6 +5,8 @@ date: 2025-09-05
 tags: [部署, 工具链]
 excerpt: "一步步讲解如何用最小工具链搭建并通过 GitHub Actions 自动部署静态博客。"
 ---
+layout: post.njk
+
 
 这篇文章介绍如何使用最小工具链把静态站点放到 GitHub Pages：
 

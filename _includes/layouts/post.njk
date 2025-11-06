@@ -1,0 +1,17 @@
+---
+layout: base.njk
+---
+
+<article class="article-content">
+  <header class="post-header">
+    <h1>{{ title }}</h1>
+    {% if page.date %}
+      <p class="meta">{{ page.date | date('yyyy-LL-dd') }}</p>
+    {% endif %}
+  </header>
+
+  <section class="post-body">
+    {{ content | safe }}
+  </section>
+
+</article>

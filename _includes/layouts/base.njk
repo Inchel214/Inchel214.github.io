@@ -3,23 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{% if title %}{{ title }} — {% endif %}Inchel 的技术博客</title>
+  {%- set site = (site or {}) -%}
+  <title>{% if title %}{{ title }} — {% endif %}{{ site.title or 'Inchel 的技术博客' }}</title>
+  <meta name="description" content="{{ page.data.excerpt or site.description }}">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:site_name" content="{{ site.title or 'Inchel' }}">
+  <meta property="og:title" content="{{ title or site.title }}">
+  <meta property="og:description" content="{{ page.data.excerpt or site.description }}">
+  {%- if site.url -%}
+  <meta property="og:url" content="{{ (site.url | trim('/') ) ~ page.url }}">
+  <link rel="canonical" href="{{ (site.url | trim('/') ) ~ page.url }}">
+  {%- endif -%}
+  <meta name="twitter:card" content="summary">
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#content">跳到主要内容</a>
   <header class="site-header">
     <div class="container header-inner">
-  <a class="brand" href="/">Inchel</a>
-      <nav class="main-nav">
-        <a href="#posts">文章</a>
-        <a href="#about">关于</a>
-        <a href="#projects">项目</a>
-        <a href="#contact">联系</a>
+  <a class="brand" href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Inchel</a>
+      <nav class="main-nav" role="navigation" aria-label="主要导航">
+        <a href="#posts" {% if page.url == '/' %}aria-current="page"{% endif %}>文章</a>
+        <a href="#about" {% if page.url == '/' %}aria-current="page"{% endif %}>关于</a>
+        <a href="#projects" {% if page.url == '/' %}aria-current="page"{% endif %}>项目</a>
+        <a href="#contact" {% if page.url == '/' %}aria-current="page"{% endif %}>联系</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
+  <main id="content" class="container">
     {{ content | safe }}
   </main>
 
