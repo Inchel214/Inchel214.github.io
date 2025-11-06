@@ -10,6 +10,10 @@ import os
 import pathlib
 import shutil
 import markdown
+try:
+    import frontmatter
+except Exception:
+    frontmatter = None
 from datetime import datetime
 
 ROOT = pathlib.Path(__file__).parent.resolve()
@@ -28,31 +32,54 @@ def slugify(name: str) -> str:
 
 
 def parse_markdown(md_path: pathlib.Path):
+    """解析 Markdown 文件，优先使用 YAML front-matter（若可用），返回 dict:
+    { title, date, html, excerpt, tags, cover }
+    兼容无 front-matter 的老格式（首行 # 标题、第二行 yyyy-mm-dd）。
+    """
     text = md_path.read_text(encoding='utf-8')
-    # 简单规则：第一行以 # 开头视为标题，下一行为日期（可选）
-    lines = text.splitlines()
     title = md_path.stem
-    date = None
-    if lines:
-        if lines[0].startswith('#'):
-            title = lines[0].lstrip('#').strip()
-            # 查找下一行是否是日期形式 yyyy-mm-dd
-            if len(lines) > 1:
-                maybe = lines[1].strip()
-                try:
-                    datetime.strptime(maybe, '%Y-%m-%d')
-                    date = maybe
-                    # 移除前两行用于 markdown 转换
-                    body = '\n'.join(lines[2:])
-                except Exception:
-                    body = '\n'.join(lines[1:])
-        else:
-            body = text
+    date = ''
+    excerpt = ''
+    tags = []
+    cover = None
+
+    if frontmatter:
+        post = frontmatter.loads(text)
+        meta = post.metadata or {}
+        title = meta.get('title') or title
+        date = meta.get('date') or ''
+        excerpt = meta.get('excerpt') or ''
+        tags = meta.get('tags') or []
+        cover = meta.get('cover')
+        body = post.content or ''
     else:
-        body = ''
+        # 退回兼容解析
+        lines = text.splitlines()
+        if lines:
+            if lines[0].startswith('#'):
+                title = lines[0].lstrip('#').strip()
+                if len(lines) > 1:
+                    maybe = lines[1].strip()
+                    try:
+                        datetime.strptime(maybe, '%Y-%m-%d')
+                        date = maybe
+                        body = '\n'.join(lines[2:])
+                    except Exception:
+                        body = '\n'.join(lines[1:])
+            else:
+                body = text
+        else:
+            body = ''
 
     html = markdown.markdown(body)
-    return title, date, html
+    return {
+        'title': title,
+        'date': date,
+        'html': html,
+        'excerpt': excerpt,
+        'tags': tags,
+        'cover': cover,
+    }
 
 
 def build():
@@ -72,8 +99,15 @@ def build():
     posts_out = OUT_DIR / 'posts'
     posts_out.mkdir(parents=True, exist_ok=True)
     posts_index = []
-    for md in sorted(POSTS_DIR.glob('*.md')):
-        title, date, html = parse_markdown(md)
+    md_list = sorted(POSTS_DIR.glob('*.md'))
+    for md in md_list:
+        post = parse_markdown(md)
+        title = post.get('title')
+        date = post.get('date')
+        html = post.get('html')
+        excerpt = post.get('excerpt')
+        tags = post.get('tags')
+        cover = post.get('cover')
         slug = slugify(md.stem)
         out_file = posts_out / f"{slug}.html"
 
@@ -101,10 +135,11 @@ def build():
 '''
 
         out_file.write_text(article_page, encoding='utf-8')
-        posts_index.append({'title': title, 'date': date or '', 'url': f'posts/{slug}.html'})
+        posts_index.append({'title': title, 'date': date or '', 'url': f'posts/{slug}.html', 'excerpt': excerpt or '', 'tags': tags or [], 'cover': cover})
 
     # 生成首页：优先使用仓库根的 index.html 作为模板并注入文章卡片
     # 把文章渲染为与根站点一致的卡片列表 HTML
+    
     cards = []
     for p in posts_index:
         cards.append(f"""
