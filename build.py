@@ -100,42 +100,42 @@ def build():
     posts_out.mkdir(parents=True, exist_ok=True)
     posts_index = []
     md_list = sorted(POSTS_DIR.glob('*.md'))
-    for md in md_list:
-        post = parse_markdown(md)
-        title = post.get('title')
-        date = post.get('date')
-        html = post.get('html')
-        excerpt = post.get('excerpt')
-        tags = post.get('tags')
-        cover = post.get('cover')
-        slug = slugify(md.stem)
-        out_file = posts_out / f"{slug}.html"
+        for md in md_list:
+                post = parse_markdown(md)
+                title = post.get('title')
+                date = post.get('date')
+                html = post.get('html')
+                excerpt = post.get('excerpt')
+                tags = post.get('tags')
+                cover = post.get('cover')
+                slug = slugify(md.stem)
+                out_file = posts_out / f"{slug}.html"
 
-        # 为单篇文章使用一个简单模板（避免复杂依赖）
-        article_page = f'''<!doctype html>
+                # 为单篇文章使用一个简单模板（避免复杂依赖）
+                article_page = f'''<!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{title}</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{title}</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-  <div class="container article-content">
-    <a href="../index.html" style="text-decoration:none;color:inherit"><h1>Inchel214 的技术博客</h1></a>
-    <hr>
-    <article>
+    <div class="container article-content">
+        <a href="../index.html" style="text-decoration:none;color:inherit"><h1>Inchel 的技术博客</h1></a>
+        <hr>
+        <article>
 {html}
-    </article>
-    <hr>
-    <footer>生成于 {datetime.utcnow().isoformat()}</footer>
-  </div>
+        </article>
+        <hr>
+        <footer>生成于 {datetime.utcnow().isoformat()}</footer>
+    </div>
 </body>
 </html>
 '''
 
-        out_file.write_text(article_page, encoding='utf-8')
-        posts_index.append({'title': title, 'date': date or '', 'url': f'posts/{slug}.html', 'excerpt': excerpt or '', 'tags': tags or [], 'cover': cover})
+                out_file.write_text(article_page, encoding='utf-8')
+                posts_index.append({'title': title, 'date': date or '', 'url': f'posts/{slug}.html', 'excerpt': excerpt or '', 'tags': tags or [], 'cover': cover})
 
     # 生成首页：优先使用仓库根的 index.html 作为模板并注入文章卡片
     # 把文章渲染为与根站点一致的卡片列表 HTML

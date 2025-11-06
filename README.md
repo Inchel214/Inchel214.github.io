@@ -1,53 +1,34 @@
-# Inchel214.github.io
-个人技术博客 — 首页已生成
 
-本仓库为 GitHub Pages 静态站点的源代码示例。此改动包含一个简洁的技术博客首页（`index.html`）与基础样式（`assets/css/style.css`）。
+# Inchel.github.io
+个人技术博客 — 已迁移到 Eleventy（11ty）
 
-本地预览：
+本仓库现在使用 Eleventy（Node + @11ty/eleventy）作为静态站点生成器。为了避免与新构建流程混淆，遗留的 Python 构建脚本 `build.py` 已被移除。
+
+本地预览与构建：
 
 ```bash
-# Eleventy 已替代旧的 Python 构建：使用 Node + Eleventy 构建并输出到 public/
-# 在仓库根目录安装依赖并构建：
+# 安装依赖并构建（在仓库根目录）：
 npm ci
 npm run build
+
 # 本地预览生成结果：
 python3 -m http.server --directory public 8000
 # 然后在浏览器打开 http://localhost:8000/
 ```
 
-提交变更：
+自动化：
 
-```bash
-git add -A
-git commit -m "chore: add blog homepage and styles"
-```
+- `.github/workflows/pages.yml`：在 `main` 分支每次 push 时会运行 `npm ci`、`npm run build` 并把 `public/` 部署到 GitHub Pages（通过官方 actions）。
 
-后续建议：
-- 若要部署到 GitHub Pages，可直接把 `main` 分支作为 Pages 源或者添加 GitHub Actions 自动化工作流。
-- 可替换示例文章内容，改为使用静态站点生成器（如 Hugo / Jekyll / Eleventy）以便管理大量文章与模板。
+如果你需要使用 Python 脚本构建（例如离线或特定定制需求），可以在版本历史中恢复 `build.py` 的旧版本，或联系我我可以为你添加一个独立的 Python 构建分支作为备份。
 
-
-自动化（已替换为 Eleventy）：
-
-- `package.json`：包含 `@11ty/eleventy`，提供 `npm run build`（构建到 `public/`）与 `npm run start`（本地调试服务）。
-- `.github/workflows/pages.yml`：在 `main` 上的每次 push 会运行 `npm ci`、`npm run build` 并把 `public/` 部署到 GitHub Pages（通过官方 actions）。
-
-使用说明：
-
-1. 在本地安装依赖并构建：
+常用命令回顾：
 
 ```bash
 npm ci
 npm run build
 python3 -m http.server --directory public 8000
-# 打开 http://localhost:8000/
 ```
 
-2. 推送到远程触发自动部署：
-
-```bash
-git add -A
-git commit -m "chore: migrate build to Eleventy"
-git push origin main
-```
+如果想让我把 `build.py` 恢复到仓库的某个历史提交或添加替代的 Python 构建脚本作为可选方案，请告诉我。
 

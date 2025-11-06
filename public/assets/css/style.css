@@ -1,0 +1,70 @@
+/* 改进后的响应式博客样式（排版优化） */
+:root{
+  --bg: #071024;
+  --surface: rgba(255,255,255,0.02);
+  --muted: #94a3b8;
+  --accent: #6C5CE7;
+  --accent-2: #00B894;
+  --text: #e6eef8;
+  --container: 1100px;
+  --radius: 12px;
+  --max-read-width: 760px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,var(--bg) 0%, #081124 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+body{font-size:16px;line-height:1.65}
+.container{max-width:var(--container);margin:0 auto;padding:28px}
+.site-header{border-bottom:1px solid rgba(255,255,255,0.03);background:transparent;padding:12px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.15rem}
+.main-nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:0.95rem}
+.main-nav a:hover{color:var(--text)}
+
+/* Hero */
+.hero{display:flex;gap:28px;align-items:center;justify-content:space-between;padding:36px 0}
+.hero h1{font-size:2.2rem;margin:0;letter-spacing:-0.02em}
+.lead{color:var(--muted);margin-top:10px;max-width:520px}
+.cta{display:inline-block;margin-top:16px;padding:10px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;font-weight:600}
+.hero-illus svg{border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,0.4)}
+
+/* 页面主体（文章列表 + 侧边栏） */
+.section-title{color:var(--text);margin-bottom:18px}
+.posts-grid{margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+
+.post-card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease}
+.post-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+.post-card .thumb{height:140px;overflow:hidden;flex:0 0 140px}
+.post-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.post-body h3{margin:0;font-size:1.05rem}
+.meta{color:var(--muted);font-size:0.85rem;margin-bottom:4px}
+.excerpt{color:var(--muted);font-size:0.95rem}
+.read-more{display:inline-block;margin-top:auto;color:var(--accent);text-decoration:none;font-weight:600}
+
+/* 侧边栏 */
+.sidebar{margin-top:28px}
+.card{background:var(--surface);padding:16px;border-radius:10px;margin-bottom:14px;color:var(--muted)}
+.card h3{margin-top:0;color:var(--text)}
+
+/* 布局：在宽屏时 main 为两列（内容 + 侧边栏） */
+@media(min-width:980px){
+  main.container{display:grid;grid-template-columns:1fr 320px;grid-gap:36px;align-items:start}
+  .sidebar{margin-top:0}
+  .sidebar .card{position:sticky;top:88px}
+}
+
+/* 移动端优化 */
+@media(max-width:720px){
+  .hero{flex-direction:column;align-items:flex-start;padding:22px 0}
+  .main-nav{display:none}
+  .cta{width:100%}
+  .grid{grid-template-columns:1fr}
+  .post-card .thumb{height:160px}
+}
+
+/* 阅读页面宽度约束（若未来生成文章页面使用） */
+.article-content{max-width:var(--max-read-width);margin:0 auto}
+
+/* 可打印友好 */
+@media print{.cta,.hero-illus,.main-nav{display:none}}
