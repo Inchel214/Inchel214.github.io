@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% if title %}{{ title }} — {% endif %}Inchel214 的技术博客</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">Inchel214</a>
+      <nav class="main-nav">
+        <a href="#posts">文章</a>
+        <a href="#about">关于</a>
+        <a href="#projects">项目</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© {{ (new Date()).getFullYear() }} Inchel214 — 技术博客。基于静态站点生成与 GitHub Pages 部署。</p>
+    </div>
+  </footer>
+
+</body>
+</html>

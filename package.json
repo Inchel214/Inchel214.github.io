@@ -1,0 +1,12 @@
+{
+  "name": "inchel214-blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0"
+  }
+}
