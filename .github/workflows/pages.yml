@@ -32,4 +32,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Use a Personal Access Token with `repo` scope for push permissions.
+          # Create a repo secret named `GH_PAGES_DEPLOY_TOKEN` with that PAT.
+          personal_token: ${{ secrets.GH_PAGES_DEPLOY_TOKEN }}
           publish_dir: ./public
