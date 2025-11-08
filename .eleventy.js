@@ -23,6 +23,17 @@ module.exports = function(eleventyConfig) {
     return d.toISOString();
   });
 
+  // Add XML escape filter for feed
+  eleventyConfig.addFilter("xmlEscape", function(str) {
+    if(!str) return '';
+    return str.toString()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  });
+
   // Create posts collection from posts directory
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md").reverse();
