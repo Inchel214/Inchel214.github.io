@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   {%- set site = (site or {}) -%}
-  <title>{% if title %}{{ title }} — {% endif %}{{ site.title or 'Inchel 的技术博客' }}</title>
+  <title>{% if title %}{{ title }} — {% endif %}{{ site.title or 'Inchel Lee 的技术博客' }}</title>
   <meta name="description" content="{{ page.data.excerpt or site.description }}">
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:site_name" content="{{ site.title or 'Inchel' }}">
+  <meta property="og:site_name" content="{{ site.title or 'Inchel Lee' }}">
   <meta property="og:title" content="{{ title or site.title }}">
   <meta property="og:description" content="{{ page.data.excerpt or site.description }}">
   {%- if site.url -%}
@@ -24,7 +24,7 @@
   <a class="skip-link" href="#content">跳到主要内容</a>
   <header class="site-header">
     <div class="container header-inner">
-  <a class="brand" href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Inchel</a>
+  <a class="brand" href="/" {% if page.url == '/' %}aria-current="page"{% endif %}>Inchel Lee</a>
       <nav class="main-nav" role="navigation" aria-label="主要导航">
         <a href="#posts" {% if page.url == '/' %}aria-current="page"{% endif %}>文章</a>
         <a href="#about" {% if page.url == '/' %}aria-current="page"{% endif %}>关于</a>
@@ -40,7 +40,7 @@
 
   <footer class="site-footer">
     <div class="container">
-  <p>© {{ "" | year }} Inchel — 技术博客。基于静态站点生成与 GitHub Pages 部署。</p>
+  <p>© {{ "" | year }} Inchel Lee — 技术博客。基于静态站点生成与 GitHub Pages 部署。</p>
     </div>
   </footer>
 
