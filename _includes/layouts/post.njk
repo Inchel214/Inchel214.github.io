@@ -8,10 +8,29 @@ layout: base.njk
     {% if page.date %}
       <p class="meta">{{ page.date | date('yyyy-LL-dd') }}</p>
     {% endif %}
+    
+    {% if tags and tags.length > 0 %}
+      <div class="post-tags">
+        {% for tag in tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
   </header>
+
+  {% if excerpt %}
+    <div class="post-excerpt">
+      <p>{{ excerpt }}</p>
+    </div>
+  {% endif %}
 
   <section class="post-body">
     {{ content | safe }}
   </section>
 
+  <footer class="post-footer">
+    <div class="post-navigation">
+      <a href="/">← 返回首页</a>
+    </div>
+  </footer>
 </article>

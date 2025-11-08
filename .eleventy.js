@@ -23,6 +23,22 @@ module.exports = function(eleventyConfig) {
     return d.toISOString();
   });
 
+  // Create posts collection from posts directory
+  eleventyConfig.addCollection("posts", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("posts/*.md").reverse();
+  });
+
+  // Create tags collection
+  eleventyConfig.addCollection("tagList", function(collectionApi) {
+    const tags = new Set();
+    collectionApi.getAll().forEach(function(item) {
+      if (item.data.tags) {
+        item.data.tags.forEach(tag => tags.add(tag));
+      }
+    });
+    return Array.from(tags).sort();
+  });
+
   return {
     dir: {
       input: ".",

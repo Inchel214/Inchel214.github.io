@@ -71,5 +71,20 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
 /* 阅读页面宽度约束（若未来生成文章页面使用） */
 .article-content{max-width:var(--max-read-width);margin:0 auto}
 
+/* 文章页面样式 */
+.post-header{margin-bottom:2rem}
+.post-tags{margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.5rem}
+.tag{display:inline-block;padding:0.25rem 0.75rem;background:var(--surface);border-radius:20px;font-size:0.85rem;color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+.post-excerpt{background:var(--surface);padding:1.5rem;border-radius:var(--radius);margin:1.5rem 0;font-style:italic;border-left:4px solid var(--accent)}
+.post-footer{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1)}
+.post-navigation a{color:var(--accent);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:0.5rem;transition:color 0.2s ease}
+.post-navigation a:hover{color:var(--accent-2)}
+.post-body{line-height:1.8;font-size:1.05rem}
+.post-body h2,.post-body h3,.post-body h4{margin-top:2rem;margin-bottom:1rem;color:var(--text)}
+.post-body p{margin-bottom:1.5rem}
+.post-body code{background:var(--surface);padding:0.2rem 0.4rem;border-radius:4px;font-size:0.9rem}
+.post-body pre{background:var(--surface);padding:1rem;border-radius:var(--radius);overflow-x:auto;margin:1.5rem 0}
+.post-body pre code{background:none;padding:0}
+
 /* 可打印友好 */
 @media print{.cta,.hero-illus,.main-nav{display:none}}
