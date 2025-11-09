@@ -132,6 +132,17 @@ module.exports = function(eleventyConfig) {
     return Array.from(tags).sort();
   });
 
+  // i18n shortcodes for bilingual content in Markdown
+  // Usage in .md: 
+  // {% zh %}中文段落或句子{% endzh %}
+  // {% en %}English paragraph or sentence{% enden %}
+  eleventyConfig.addPairedShortcode('zh', function(content) {
+    return `<div data-lang="zh">${content}</div>`;
+  });
+  eleventyConfig.addPairedShortcode('en', function(content) {
+    return `<div data-lang="en">${content}</div>`;
+  });
+
   return {
     dir: {
       input: ".",

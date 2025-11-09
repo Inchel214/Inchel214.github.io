@@ -32,7 +32,7 @@ layout: base.njk
   <footer class="post-footer">
     <div class="post-navigation">
       {% if env and env.isProd %}{% set homeHref = (site.url | trim('/')) ~ '/' %}{% else %}{% set homeHref = '/' %}{% endif %}
-      <a href="{{ homeHref }}">← 返回首页</a>
+      <a href="{{ homeHref }}" data-i18n="back_home">← 返回首页</a>
     </div>
   </footer>
 </article>

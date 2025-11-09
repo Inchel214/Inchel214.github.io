@@ -1,0 +1,94 @@
+(() => {
+  const dict = {
+    zh: {
+      brand: "Inchel Lee",
+      nav_home: "首页",
+      nav_projects: "项目",
+      nav_posts: "文章",
+      nav_about: "关于",
+      nav_contact: "联系我",
+      back_home: "← 返回首页",
+      hero_title: "技术 · 思考 · 实践",
+      hero_lead: "记录项目、分享后端与工程实践中的知识与思考。专注于AI应用开发，助力职业成长与技术落地。欢迎阅读、反馈与讨论。",
+      cta_latest: "查看最新文章",
+      sec_posts: "最新文章",
+      updated_label: "更新于：",
+      read_more: "阅读全文 →",
+      about_title: "关于我",
+      about_intro: "你好，我是 Inchel Lee，从事软件工程多年，关注系统设计、后端与工程化实践。这里记录我学到的东西与思考。",
+      sec_projects: "项目",
+      sec_contact: "联系我",
+      contact_intro: "如果你对我的项目感兴趣，或者希望与我合作，请通过以下方式联系我",
+      label_email: "邮箱：",
+      label_github: "GitHub："
+    },
+    en: {
+      brand: "Inchel Lee",
+      nav_home: "Home",
+      nav_projects: "Projects",
+      nav_posts: "Posts",
+      nav_about: "About",
+      nav_contact: "Contact",
+      back_home: "← Back Home",
+      hero_title: "Technology · Thinking · Practice",
+      hero_lead: "Sharing backend and engineering practices. Focus on AI app development to support career growth and practical delivery.",
+      cta_latest: "View Latest Posts",
+      sec_posts: "Latest Posts",
+      updated_label: "Updated: ",
+      read_more: "Read More →",
+      about_title: "About Me",
+      about_intro: "Hi, I'm Inchel Lee, a software engineer focusing on system design, backend, and engineering practices. This site records what I learn and think.",
+      sec_projects: "Projects",
+      sec_contact: "Contact",
+      contact_intro: "If you're interested in my projects or want to collaborate, please reach me via:",
+      label_email: "Email: ",
+      label_github: "GitHub: "
+    }
+  };
+
+  const preferred = localStorage.getItem('lang');
+  const defaultLang = preferred || (document.documentElement.lang && document.documentElement.lang.startsWith('zh') ? 'zh' : 'en');
+
+  function apply(lang) {
+    const t = dict[lang] || dict.zh;
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (!key) return;
+      const val = t[key];
+      if (val == null) return;
+      if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) {
+        el.value = val;
+      } else {
+        el.textContent = val;
+      }
+    });
+    // Toggle bilingual segments in Markdown-rendered content
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      const show = el.getAttribute('data-lang') === lang;
+      el.style.display = show ? '' : 'none';
+    });
+    const toggle = document.getElementById('lang-toggle');
+    if (toggle) {
+      toggle.textContent = lang === 'zh' ? 'EN' : '中文';
+      toggle.setAttribute('aria-label', lang === 'zh' ? '切换到英文' : 'Switch to Chinese');
+    }
+  }
+
+  function setLang(lang) {
+    localStorage.setItem('lang', lang);
+    apply(lang);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    apply(defaultLang);
+    const toggle = document.getElementById('lang-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const current = localStorage.getItem('lang') || defaultLang;
+        const next = current === 'zh' ? 'en' : 'zh';
+        setLang(next);
+      });
+    }
+  });
+})();
