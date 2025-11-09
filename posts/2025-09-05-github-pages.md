@@ -1,6 +1,6 @@
 ---
 title: "从零开始搭建静态博客并部署到 GitHub Pages"
-date: 2025-09-05
+date: 2025-11-05
 tags: [部署, 工具链]
 excerpt: "一步步讲解如何用最小工具链搭建并通过 GitHub Actions 自动部署静态博客。"
 layout: post.njk
