@@ -325,7 +325,9 @@ jobs:
 ### 7.2 模板报错：`parseAggregate: expected comma after expression`
 
 - 现象：构建失败，堆栈指向 Nunjucks 模板。
+{% raw %}
 - 原因：Eleventy 的 Nunjucks 引擎不支持 JS 风格的三目表达式写法（例如 `{% set x = (cond ? a : b) %}`）。
+{% endraw %}
 - 解决：改用标准的 Nunjucks `if/set` 写法：
 
 {% raw %}
@@ -367,5 +369,3 @@ jobs:
 - 扩展 `_includes/layouts/` 模板，实现标签页、归档页；
 - 在 `assets/css/style.css` 自定义主题色与排版；
 - 配置自定义域名（`Settings → Pages → Custom domain`）。
-
-如果你希望我将这一套模板整理成一键脚手架（脚本自动创建目录与文件、写入工作流），告诉我你的偏好，我可以生成一个最小可用的 Starter。
