@@ -25,14 +25,16 @@
     <div class="container header-inner">
   {% if env and env.isProd %}{% set homeHref = (site.url | trim('/')) ~ '/' %}{% else %}{% set homeHref = '/' %}{% endif %}
   <a class="brand" href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %} data-i18n="brand">Inchel Lee</a>
-      <nav class="main-nav" role="navigation" aria-label="主要导航">
-        <a href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %} data-i18n="nav_home">首页</a>
-        <a href="{{ homeHref }}#projects" data-i18n="nav_projects">项目</a>
-        <a href="{{ homeHref }}#posts" data-i18n="nav_posts">文章</a>
-        <a href="{{ homeHref }}#about" data-i18n="nav_about">关于</a>
-        <a href="{{ homeHref }}#contact" data-i18n="nav_contact">联系我</a>
-      </nav>
-      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">EN</button>
+      <div class="header-actions">
+        <nav class="main-nav" role="navigation" aria-label="主要导航">
+          <a href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %} data-i18n="nav_home">首页</a>
+          <a href="{{ homeHref }}#projects" data-i18n="nav_projects">项目</a>
+          <a href="{{ homeHref }}#posts" data-i18n="nav_posts">文章</a>
+          <a href="{{ homeHref }}#about" data-i18n="nav_about">关于</a>
+          <a href="{{ homeHref }}#contact" data-i18n="nav_contact">联系我</a>
+        </nav>
+        <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">EN</button>
+      </div>
     </div>
   </header>
 

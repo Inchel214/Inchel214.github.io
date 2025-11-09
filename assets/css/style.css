@@ -17,6 +17,7 @@ body{font-size:16px;line-height:1.58}
 .container{max-width:var(--container);margin:0 auto;padding:20px}
 .site-header{border-bottom:1px solid rgba(255,255,255,0.03);background:transparent;padding:10px 0}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.header-actions{display:flex;align-items:center;gap:12px}
 .brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.1rem}
 .main-nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-size:0.92rem}
 .main-nav a:hover, .main-nav a:focus{color:var(--text);outline:2px dashed rgba(255,255,255,0.06);outline-offset:4px}
@@ -33,15 +34,12 @@ body{font-size:16px;line-height:1.58}
   line-height:1;
   cursor:pointer;
   transition:background .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease;
-  margin-left:12px;
+  margin-left:0; /* 间隔由 header-actions 的 gap 控制 */
 }
 .lang-toggle:hover,.lang-toggle:focus{
   color:var(--text);
   border-color:rgba(255,255,255,0.16);
   box-shadow:0 0 0 3px rgba(108,92,231,0.25);
-}
-@media(max-width:720px){
-  .lang-toggle{padding:8px 12px;font-size:0.9rem}
 }
 
 /* Improve focus visibility for interactive elements */
@@ -52,7 +50,7 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
 .hero h1{font-size:2.0rem;margin:0;letter-spacing:-0.02em}
 .lead{color:var(--muted);margin-top:8px;max-width:500px}
 .cta{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;font-weight:600}
-.hero-illus svg{border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35)}
+.hero-illus img, .hero-illus svg{border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35);display:block}
 
 /* 页面主体（文章列表 + 侧边栏） */
 .section-title{color:var(--text);margin-bottom:14px}
