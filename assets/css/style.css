@@ -67,7 +67,8 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
   .hero{grid-area:hero}
   .posts-grid{grid-area:posts}
   aside.sidebar{grid-area:sidebar;margin-top:0}
-  .sidebar .card{position:sticky;top:12px}
+  /* 去除侧栏卡片粘性定位，避免与其他卡片重叠 */
+  .sidebar .card{position:static}
 }
 
 /* 移动端优化 */

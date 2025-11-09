@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve"
+    "start": "eleventy --serve",
+    "new:post": "node scripts/new-post.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.0"
