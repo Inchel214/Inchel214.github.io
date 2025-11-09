@@ -1,5 +1,23 @@
 module.exports = function(eleventyConfig) {
   const fs = require('fs');
+  const { execSync } = require('child_process');
+
+  // Helper: get last commit date of a file via git, fallback to null
+  function gitLastModifiedDate(inputPath) {
+    if(!inputPath) return null;
+    try {
+      // Use ISO 8601 (%cI) for reliable parsing across time zones
+      const cmd = `git log -1 --format=%cI -- "${inputPath}"`;
+      const out = execSync(cmd, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+      if(out) {
+        const d = new Date(out);
+        if(!isNaN(d.getTime())) return d;
+      }
+    } catch(e) {
+      // In environments without git or when file is untracked, ignore
+    }
+    return null;
+  }
   // passthrough copy for assets directory
   eleventyConfig.addPassthroughCopy("assets");
 
@@ -69,9 +87,11 @@ module.exports = function(eleventyConfig) {
       .replace(/'/g, '&#39;');
   });
 
-  // Read file's last modified time (Date) by input path
+  // Read last updated time preferring git commit date, fallback to filesystem mtime
   eleventyConfig.addFilter("fileUpdated", function(inputPath) {
     if(!inputPath) return '';
+    const gitDate = gitLastModifiedDate(inputPath);
+    if(gitDate) return gitDate;
     try {
       const stat = fs.statSync(inputPath);
       return stat.mtime;
@@ -84,11 +104,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")
       .map(item => {
-        try {
-          const stat = fs.statSync(item.inputPath);
-          item.data.updated = stat.mtime;
-        } catch(e) {
-          // ignore fs error
+        // Prefer git last commit date; fallback to filesystem mtime
+        const gitDate = gitLastModifiedDate(item.inputPath);
+        if(gitDate) {
+          item.data.updated = gitDate;
+        } else {
+          try {
+            const stat = fs.statSync(item.inputPath);
+            item.data.updated = stat.mtime;
+          } catch(e) {
+            // ignore fs error
+          }
         }
         return item;
       })
