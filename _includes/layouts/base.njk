@@ -17,8 +17,40 @@
   {%- endif -%}
   <meta name="twitter:card" content="summary">
 
+  {# Search engine verification tags (set in _data/site.json if available) #}
+  {% if site.verification and site.verification.google %}
+  <meta name="google-site-verification" content="{{ site.verification.google }}">
+  {% endif %}
+  {% if site.verification and site.verification.bing %}
+  <meta name="msvalidate.01" content="{{ site.verification.bing }}">
+  {% endif %}
+  {% if site.verification and site.verification.baidu %}
+  <meta name="baidu-site-verification" content="{{ site.verification.baidu }}">
+  {% endif %}
+
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
   <link rel="stylesheet" href="/assets/css/style.css">
+  {% if site and site.url %}
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":{{ site.title | dump | safe }},
+    "url":{{ (site.url | trim('/') ) | dump | safe }},
+    "description":{{ site.description | dump | safe }}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":{{ (site.author or site.title) | dump | safe }},
+    "url":{{ (site.url | trim('/') ) | dump | safe }},
+    "sameAs":["https://github.com/Inchel214"],
+    "description":{{ site.description | dump | safe }}
+  }
+  </script>
+  {% endif %}
 </head>
 <body>
   <header class="site-header">

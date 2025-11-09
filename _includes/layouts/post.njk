@@ -36,3 +36,25 @@ layout: base.njk
     </div>
   </footer>
 </article>
+{% if site and site.url %}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":{{ title | dump | safe }},
+  "description":{{ (excerpt or '') | dump | safe }},
+  "datePublished":{{ (page.date | date()) | dump | safe }},
+  "dateModified":{{ (page.inputPath | fileUpdated | date()) | dump | safe }},
+  "author":{
+    "@type":"Person",
+    "name":{{ (site.author or site.title) | dump | safe }}
+  },
+  "publisher":{
+    "@type":"Person",
+    "name":{{ (site.author or site.title) | dump | safe }}
+  },
+  "mainEntityOfPage":{{ ((site.url | trim('/')) ~ page.url) | dump | safe }},
+  "image":{{ (image or ((site.url | trim('/')) ~ '/assets/img/sample-cover.svg')) | dump | safe }}
+}
+</script>
+{% endif %}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+{% if site and site.url %}
+Sitemap: {{ site.url | trim('/') }}/sitemap.xml
+{% else %}
+Sitemap: /sitemap.xml
+{% endif %}
