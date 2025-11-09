@@ -23,7 +23,7 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-  {% set homeHref = (env.isProd ? (site.url | trim('/')) ~ '/' : '/') %}
+  {% if env and env.isProd %}{% set homeHref = (site.url | trim('/')) ~ '/' %}{% else %}{% set homeHref = '/' %}{% endif %}
   <a class="brand" href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Inchel Lee</a>
       <nav class="main-nav" role="navigation" aria-label="主要导航">
         <a href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %}>首页</a>
