@@ -12,6 +12,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("date", function(dateObj, format) {
     if(!dateObj) return '';
     const d = (dateObj instanceof Date) ? dateObj : new Date(dateObj);
+    if (isNaN(d.getTime())) return '';
     if(!format) return d.toISOString();
     // RFC-1123 for RSS pubDate
     if(format.indexOf('DDD') !== -1 || format.indexOf('dd') !== -1 || format.indexOf('HH') !== -1) {
@@ -28,6 +29,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("dateLocal", function(dateObj, format) {
     if(!dateObj) return '';
     const d = (dateObj instanceof Date) ? dateObj : new Date(dateObj);
+    if (isNaN(d.getTime())) return '';
     const pad = n => String(n).padStart(2, '0');
     // Use Intl to get parts in Asia/Shanghai
     const parts = new Intl.DateTimeFormat('zh-CN', {

@@ -6,9 +6,9 @@ layout: base.njk
   <header class="post-header">
     <h1>{{ title }}</h1>
     {% if page.date %}
-      <p class="meta">发布于：{{ page.date | dateLocal('yyyy-LL-dd HH:mm') }}（北京时间）</p>
+    <p class="meta">发布于：{{ page.date | dateLocal('yyyy-LL-dd HH:mm') }}</p>
     {% endif %}
-    <p class="meta">最后更新：{{ page.inputPath | fileUpdated | dateLocal('yyyy-LL-dd HH:mm') }}（北京时间）</p>
+    <p class="meta">最后更新：{{ page.inputPath | fileUpdated | dateLocal('yyyy-LL-dd HH:mm') }}</p>
     
     {% if tags and tags.length > 0 %}
       <div class="post-tags">

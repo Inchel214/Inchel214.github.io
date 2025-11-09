@@ -41,8 +41,11 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
 .post-card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease}
 .post-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(2,6,23,0.55)}
 .post-card .thumb{height:120px;overflow:hidden;flex:0 0 120px}
+.post-card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .post-body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .post-body h3{margin:0;font-size:1.0rem}
+.post-body h3 a{ color:var(--accent); text-decoration:none }
+.post-body h3 a:hover, .post-body h3 a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
 .meta{color:var(--muted);font-size:0.82rem;margin-bottom:3px}
 .excerpt{color:var(--muted);font-size:0.92rem}
 .read-more{display:inline-block;margin-top:auto;color:var(--accent);text-decoration:none;font-weight:600}
@@ -114,6 +117,25 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
 .post-body code{background:var(--surface);padding:0.18rem 0.35rem;border-radius:4px;font-size:0.9rem}
 .post-body pre{background:var(--surface);padding:0.85rem;border-radius:var(--radius);overflow-x:auto;margin:1.2rem 0}
 .post-body pre code{background:none;padding:0}
+
+/* 文内链接：默认无下划线，悬停/聚焦时显示下划线 */
+.post-body a{color:var(--accent);text-decoration:none}
+.post-body a:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+.post-body a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+
+/* 侧边栏卡片中的链接同样采用悬停下划线 */
+aside.sidebar .card a{ color:var(--accent); text-decoration:none }
+aside.sidebar .card a:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+
+/* 阅读更多按钮在悬停时显示下划线以提示可点击 */
+.read-more{ text-decoration:none }
+.read-more:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+
+/* 页脚链接：默认无下划线，悬停/聚焦时显示下划线 */
+.site-footer a{ color:var(--accent); text-decoration:none }
+.site-footer a:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+.site-footer a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
 
 /* 可打印友好 */
 @media print{.cta,.hero-illus,.main-nav{display:none}}
