@@ -15,7 +15,7 @@
       updated_label: "更新于：",
       read_more: "阅读全文 →",
       about_title: "关于我",
-      about_intro: "你好，我是 Inchel Lee，从事软件工程多年，关注系统设计、后端与工程化实践。这里记录我学到的东西与思考。",
+      about_intro: "你好，我是 Inchel Lee，2020 年从广东工业大学硕士毕业，是一名 AI 应用与后端系统的开发者。毕业至今一直致力于将视频 AI 技术在会议办公场景下的商用与落地。这里记录着我过往的参与过的项目与思考。我目标是想参与更有商业价值的项目，用 AI 技术解决真实世界的问题。",
       sec_projects: "项目",
       sec_contact: "联系我",
       contact_intro: "如果你对我的项目感兴趣，或者希望与我合作，请通过以下方式联系我",
@@ -47,7 +47,7 @@
       updated_label: "Updated: ",
       read_more: "Read More →",
       about_title: "About Me",
-      about_intro: "Hi, I'm Inchel Lee, a software engineer focusing on system design, backend, and engineering practices. This site records what I learn and think.",
+      about_intro: "Hi, I'm Inchel Lee. I graduated with a master's from Guangdong University of Technology in 2020, and I work on AI applications and backend systems. Since then I've focused on bringing video AI into meeting and office scenarios in production. Here I record the projects I've participated in and my thoughts. My goal is to work on more commercially valuable projects, using AI to solve real-world problems.",
       sec_projects: "Projects",
       sec_contact: "Contact",
       contact_intro: "If you're interested in my projects or want to collaborate, please reach me via:",
@@ -80,7 +80,8 @@
       if (el.tagName === 'INPUT' && (el.type === 'button' || el.type === 'submit')) {
         el.value = val;
       } else {
-        el.textContent = val;
+        // Allow simple HTML (e.g., <br>) in translations for better formatting
+        el.innerHTML = val;
       }
     });
     // Apply placeholder i18n for inputs
