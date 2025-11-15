@@ -1,0 +1,73 @@
+---
+layout: base.njk
+title: 项目
+---
+
+<section class="projects-page">
+  <h2 class="section-title"><span data-i18n="nav_projects">项目</span></h2>
+
+  <div class="grid">
+    {% for p in projects %}
+      <article class="project-card">
+        <div class="thumb">
+          {% if p.cover %}
+            <img src="{{ p.cover }}" alt="{{ p.title_zh }} 封面">
+          {% else %}
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="projGrad" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#6C5CE7" />
+                  <stop offset="100%" stop-color="#00B894" />
+                </linearGradient>
+              </defs>
+              <rect width="100" height="60" fill="url(#projGrad)"></rect>
+            </svg>
+          {% endif %}
+        </div>
+        <div class="body">
+          <h3 class="title">
+            <span data-lang="zh">{{ p.title_zh }}</span>
+            <span data-lang="en">{{ p.title_en }}</span>
+          </h3>
+          <p class="one-liner">
+            <span data-lang="zh">{{ p.one_liner_zh }}</span>
+            <span data-lang="en">{{ p.one_liner_en }}</span>
+          </p>
+          <p class="meta">
+            <span>{{ p.period }}</span>
+            · <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
+          </p>
+
+          {% if p.stack %}
+            <div class="badges">
+              {% for s in p.stack %}
+                <span class="badge">{{ s }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if p.metrics %}
+            <div class="metrics">
+              {% for m in p.metrics %}
+                <span class="metric-chip">
+                  <span data-lang="zh">{{ m.label_zh }}</span>
+                  <span data-lang="en">{{ m.label_en }}</span>
+                  ：{{ m.value }}
+                </span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <p class="actions">
+            {% if p.links and p.links.demo %}
+              <a href="{{ p.links.demo }}" class="read-more"><span data-lang="zh">查看 Demo</span><span data-lang="en">View Demo</span> →</a>
+            {% endif %}
+            {% if p.links and p.links.post %}
+              <a href="{{ p.links.post }}" class="read-more"><span data-lang="zh">案例/文章</span><span data-lang="en">Case/Article</span> →</a>
+            {% endif %}
+          </p>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>

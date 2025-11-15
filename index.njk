@@ -14,8 +14,73 @@ title: 首页
   </div>
 </section>
 
-<section id="posts" class="posts-grid">
+<section id="projects-home" class="projects-home">
+  <h2 class="section-title" data-i18n="sec_projects">项目</h2>
+  <hr class="section-divider">
+  <p class="lead"><span data-lang="zh">智能导播</span><span data-lang="en">Browse all projects</span></p>
+  {% if projects and projects.length > 0 %}
+    <div class="grid">
+      {% for p in projects %}
+        <article class="project-card">
+          <div class="thumb">
+            {% if p.cover %}
+              <img src="{{ p.cover }}" alt="{{ p.title_zh }} 封面">
+            {% else %}
+              <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="projHomeGrad" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#6C5CE7" />
+                    <stop offset="100%" stop-color="#00B894" />
+                  </linearGradient>
+                </defs>
+                <rect width="100" height="60" fill="url(#projHomeGrad)"></rect>
+              </svg>
+            {% endif %}
+          </div>
+          <div class="body">
+            <h3 class="title">
+              <span data-lang="zh">{{ p.title_zh }}</span>
+              <span data-lang="en">{{ p.title_en }}</span>
+            </h3>
+            <p class="one-liner">
+              <span data-lang="zh">{{ p.one_liner_zh }}</span>
+              <span data-lang="en">{{ p.one_liner_en }}</span>
+            </p>
+            <p class="meta">
+              <span>{{ p.period }}</span>
+              · <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
+            </p>
+            {% if p.stack %}
+              <div class="badges">
+                {% for s in p.stack %}
+                  <span class="badge">{{ s }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if p.metrics %}
+              <div class="metrics">
+                {% for m in p.metrics %}
+                  <span class="metric-chip">
+                    <span data-lang="zh">{{ m.label_zh }}</span>
+                    <span data-lang="en">{{ m.label_en }}</span>
+                    ：{{ m.value }}
+                  </span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    <p><a class="read-more" href="/projects/"><span data-lang="zh">查看全部项目</span><span data-lang="en">Browse all projects</span> →</a></p>
+  {% else %}
+    <p><span data-lang="zh">暂无项目。</span><span data-lang="en">No projects yet.</span></p>
+  {% endif %}
+</section>
+
+<section id="posts" class="posts-grid posts-strips">
   <h2 class="section-title" data-i18n="sec_posts">最新文章</h2>
+  <hr class="section-divider">
   <div class="grid">
     {% for post in collections.posts %}
       <article class="post-card">
@@ -34,13 +99,15 @@ title: 首页
             </svg>
           {% endif %}
         </div>
-        <div class="post-body">
-          <h3><a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a></h3>
-          <p class="meta"><span data-i18n="updated_label">更新于：</span>{{ post.data.updated | dateLocal("yyyy-LL-dd HH:mm") }}</p>
-          {% if post.data.excerpt %}
-            <p class="excerpt">{{ post.data.excerpt }}</p>
-          {% endif %}
-          <a class="read-more" href="{{ post.url }}" data-i18n="read_more">阅读全文 →</a>
+        <div class="post-info">
+          <div class="post-title">
+            <h3><a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a></h3>
+            {% set updated = post.data.updated or post.date %}
+            <p class="meta"><span data-i18n="updated_label">更新于：</span>{{ updated | dateLocal("yyyy-LL-dd HH:mm") }}</p>
+            {% if post.data.excerpt %}
+              <p class="excerpt">{{ post.data.excerpt }}</p>
+            {% endif %}
+        </div>
         </div>
       </article>
     {% endfor %}
@@ -61,10 +128,20 @@ title: 首页
 
   <section id="projects" class="card">
     <h3 data-i18n="sec_projects">项目</h3>
-    <ul>
-      <li><a href="#">消防设备过期预警</a></li>
-      <li><a href="#">微信小程序</a></li>
-    </ul>
+    {% if projects and projects.length > 0 %}
+      <ul>
+        {% for p in projects | slice(0,2) %}
+          <li>
+            <a href="/projects/">
+              <span data-lang="zh">{{ p.title_zh }}</span>
+              <span data-lang="en">{{ p.title_en }}</span>
+            </a>
+            <span class="badge" style="margin-left:6px">{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">Live</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">WIP</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <p><a href="/projects/">查看全部项目 →</a></p>
   </section>
 
   <section id="tags" class="card">
