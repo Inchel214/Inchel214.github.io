@@ -20,7 +20,17 @@
       sec_contact: "联系我",
       contact_intro: "如果你对我的项目感兴趣，或者希望与我合作，请通过以下方式联系我",
       label_email: "邮箱：",
-      label_github: "GitHub："
+      label_github: "GitHub：",
+      sec_tags: "标签",
+      tags_view_all: "查看全部标签 →",
+      tags_empty: "暂无标签。",
+      tags_all: "所有标签",
+      posts_word: "篇",
+      tags_back_index: "← 返回标签索引",
+      tag_no_posts: "暂时没有包含该标签的文章。",
+      tags_search_label: "搜索标签",
+      tags_search_placeholder: "搜索标签…",
+      tags_search_empty: "没有匹配的标签。"
     },
     en: {
       brand: "Inchel Lee",
@@ -42,7 +52,17 @@
       sec_contact: "Contact",
       contact_intro: "If you're interested in my projects or want to collaborate, please reach me via:",
       label_email: "Email: ",
-      label_github: "GitHub: "
+      label_github: "GitHub: ",
+      sec_tags: "Tags",
+      tags_view_all: "Browse all tags →",
+      tags_empty: "No tags yet.",
+      tags_all: "All Tags",
+      posts_word: "posts",
+      tags_back_index: "← Back to Tags Index",
+      tag_no_posts: "No posts under this tag yet.",
+      tags_search_label: "Search tags",
+      tags_search_placeholder: "Search tags…",
+      tags_search_empty: "No matching tags."
     }
   };
 
@@ -61,6 +81,14 @@
         el.value = val;
       } else {
         el.textContent = val;
+      }
+    });
+    // Apply placeholder i18n for inputs
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      const val = t[key];
+      if (val != null) {
+        el.setAttribute('placeholder', val);
       }
     });
     // Toggle bilingual segments in Markdown-rendered content

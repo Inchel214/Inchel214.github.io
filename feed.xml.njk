@@ -16,6 +16,11 @@ eleventyExcludeFromCollections: true
         <link>{{ siteUrl }}{{ post.url }}</link>
         <guid isPermaLink="true">{{ siteUrl }}{{ post.url }}</guid>
         <pubDate>{{ post.date | date('ddd, DD MMM YYYY HH:mm:ss Z') }}</pubDate>
+        {% if post.data.tags %}
+          {% for t in post.data.tags %}
+            <category>{{ t | xmlEscape }}</category>
+          {% endfor %}
+        {% endif %}
         {% if post.data.excerpt %}
         <description>{{ post.data.excerpt | xmlEscape }}</description>
         {% else %}

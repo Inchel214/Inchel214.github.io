@@ -132,6 +132,48 @@ module.exports = function(eleventyConfig) {
     return Array.from(tags).sort();
   });
 
+  // Create tagCounts collection: [{ tag, count }] sorted by count desc
+  eleventyConfig.addCollection("tagCounts", function(collectionApi) {
+    const counts = {};
+    collectionApi.getAll().forEach(item => {
+      const t = item.data && item.data.tags;
+      if (Array.isArray(t)) {
+        t.forEach(tag => {
+          // Skip falsy values
+          if (!tag) return;
+          counts[tag] = (counts[tag] || 0) + 1;
+        });
+      }
+    });
+    return Object.entries(counts)
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => {
+        if (b.count !== a.count) return b.count - a.count;
+        return a.tag.localeCompare(b.tag, 'zh-CN');
+      });
+  });
+
+  // Create topTags collection: first 10 tags by article count
+  eleventyConfig.addCollection("topTags", function(collectionApi) {
+    const counts = {};
+    collectionApi.getAll().forEach(item => {
+      const t = item.data && item.data.tags;
+      if (Array.isArray(t)) {
+        t.forEach(tag => {
+          if (!tag) return;
+          counts[tag] = (counts[tag] || 0) + 1;
+        });
+      }
+    });
+    return Object.entries(counts)
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => {
+        if (b.count !== a.count) return b.count - a.count;
+        return a.tag.localeCompare(b.tag, 'zh-CN');
+      })
+      .slice(0, 10);
+  });
+
   // i18n shortcodes for bilingual content in Markdown
   // Usage in .md: 
   // {% zh %}中文段落或句子{% endzh %}

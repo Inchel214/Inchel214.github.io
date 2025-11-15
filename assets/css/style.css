@@ -3,7 +3,7 @@
   --bg: #071024;
   --surface: rgba(255,255,255,0.06);
   --muted: #94a3b8;
-  --accent: #6C5CE7;
+  --accent: #60A5FA; /* 浅蓝主色，替换原紫色 */
   --accent-2: #00B894;
   --text: #e6eef8;
   --container: 1100px;
@@ -39,11 +39,11 @@ body{font-size:16px;line-height:1.58}
 .lang-toggle:hover,.lang-toggle:focus{
   color:var(--text);
   border-color:rgba(255,255,255,0.16);
-  box-shadow:0 0 0 3px rgba(108,92,231,0.25);
+  box-shadow:0 0 0 3px rgba(96,165,250,0.25);
 }
 
 /* Improve focus visibility for interactive elements */
-a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2px}
+a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2px}
 
 /* Hero */
 .hero{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:24px 0}
@@ -127,7 +127,7 @@ a:focus, button:focus {outline:3px solid rgba(108,92,231,0.35);outline-offset:2p
 /* 文章页面样式 */
 .post-header{margin-bottom:1.6rem}
 .post-tags{margin-top:0.8rem;display:flex;flex-wrap:wrap;gap:0.4rem}
-.tag{display:inline-block;padding:0.2rem 0.6rem;background:var(--surface);border-radius:18px;font-size:0.84rem;color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
+.tag{display:inline-block;padding:0.28rem 0.7rem;background:var(--surface);border-radius:18px;font-size:0.95rem;color:var(--muted);border:1px solid rgba(255,255,255,0.1)}
 .post-excerpt{background:var(--surface);padding:1.2rem;border-radius:var(--radius);margin:1.2rem 0;font-style:italic;border-left:3px solid var(--accent)}
 .post-footer{margin-top:2.2rem;padding-top:1.4rem;border-top:1px solid rgba(255,255,255,0.1)}
 .post-navigation a{color:var(--accent);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:0.45rem;transition:color 0.2s ease}
@@ -149,6 +149,13 @@ aside.sidebar .card a{ color:var(--accent); text-decoration:none }
 aside.sidebar .card a:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
 aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
 
+/* 侧栏标签按钮容器与样式（横向铺设，小按钮） */
+.tag-badges{display:flex;flex-wrap:wrap;gap:0.4rem}
+/* 覆盖侧栏卡片内的链接下划线，使按钮风格更统一 */
+.tag-badges .tag{color:var(--text);text-decoration:none}
+.tag-badges .tag:hover,.tag-badges .tag:focus{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18);text-decoration:none}
+.tag .badge{display:inline-block;margin-left:0.4rem;padding:0 0.45rem;min-width:20px;height:20px;line-height:20px;border-radius:10px;background:var(--accent);color:#fff;font-size:0.78rem}
+
 /* 阅读更多按钮在悬停时显示下划线以提示可点击 */
 .read-more{ text-decoration:none }
 .read-more:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
@@ -160,3 +167,45 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
 
 /* 可打印友好 */
 @media print{.cta,.hero-illus,.main-nav{display:none}}
+
+/* 标签索引页：标签链接使用浅蓝主色 */
+.tags-index .tag-list a{ color:var(--accent); text-decoration:none }
+.tags-index .tag-list a:hover, .tags-index .tag-list a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+
+/* 标签聚合页底部返回链接使用浅蓝主色 */
+.posts-grid .back-link{ color:var(--accent); text-decoration:none; font-weight:600 }
+.posts-grid .back-link:hover, .posts-grid .back-link:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
+
+/* 标签索引页搜索框样式 */
+.tags-index .tag-search {
+  margin: 0 0 1rem;
+}
+.tags-index .tag-search label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+.tags-index .tag-search input[type="search"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+.tags-index .tag-search input[type="search"]:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.25);
+}
+.tags-index .help {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+.tags-index .empty {
+  margin-top: 0.75rem;
+  color: var(--muted);
+}

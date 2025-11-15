@@ -61,6 +61,22 @@ title: 首页
     </ul>
   </section>
 
+  <section id="tags" class="card">
+    <h3 data-i18n="sec_tags">标签</h3>
+    {% if collections.topTags and collections.topTags.length > 0 %}
+      <div class="tag-badges">
+        {% for t in collections.topTags %}
+          <a class="tag" href="/tags/{{ t.tag }}/" title="{{ t.tag }} {{ t.count }}">
+            {{ t.tag }}<span class="badge">{{ t.count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p data-i18n="tags_empty">暂无标签。</p>
+    {% endif %}
+    <p><a href="/tags/" data-i18n="tags_view_all">查看全部标签 →</a></p>
+  </section>
+
   <section id="contact" class="card">
     <h3 data-i18n="sec_contact">联系我</h3>
     <p data-i18n="contact_intro">如果你对我的项目感兴趣，或者希望与我合作，请通过以下方式联系我</p>

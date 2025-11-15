@@ -1,0 +1,31 @@
+---
+permalink: /tags/
+layout: base.njk
+title: 标签索引
+---
+
+<section class="tags-index">
+  <h2 data-i18n="tags_all">所有标签</h2>
+  <div class="tag-search">
+    <label for="tagSearch" data-i18n="tags_search_label">搜索标签</label>
+    <input type="search" id="tagSearch" placeholder="搜索标签…" data-i18n-placeholder="tags_search_placeholder" aria-describedby="tagSearchHelp" />
+    <small id="tagSearchHelp" class="help">按标签名称实时筛选列表</small>
+  </div>
+  {% if collections.tagList and collections.tagList.length > 0 %}
+    <ul class="tag-list">
+      {% for t in collections.tagList %}
+        {% set tagPosts = collections[t] %}
+        {% set latestPost = (tagPosts | reverse)[0] %}
+        {% set latestDate = latestPost and (latestPost.data.updated or latestPost.date) %}
+        <li>
+          <a href="/tags/{{ t }}/">{{ t }}</a>
+          <span class="meta">（{{ tagPosts.length }} <span data-i18n="posts_word">篇</span>，<span data-i18n="updated_label">更新于：</span>{{ latestDate | dateLocal('yyyy-LL-dd') }}）</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <p id="tagSearchEmpty" class="empty" style="display:none" data-i18n="tags_search_empty">没有匹配的标签。</p>
+  {% else %}
+    <p data-i18n="tags_empty">当前还没有标签。</p>
+  {% endif %}
+  <script src="/assets/js/tags-search.js"></script>
+</section>
