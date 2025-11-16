@@ -17,7 +17,7 @@ title: 首页
 <section id="projects-home" class="projects-home">
   <h2 class="section-title" data-i18n="sec_projects">项目</h2>
   <hr class="section-divider">
-  <p class="lead"><span data-lang="zh">智能导播</span><span data-lang="en">Browse all projects</span></p>
+  <p class="lead"><span data-lang="zh">华为会议平板智能导播</span> <span class="actions" data-lang="zh"><a class="lang-toggle" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a><a class="lang-toggle" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a><a class="lang-toggle" href="/posts/2025-11-09-胡说八道/">案例文章</a></p>
   {% if projects and projects.length > 0 %}
     <div class="grid">
       {% for p in projects %}
@@ -85,8 +85,9 @@ title: 首页
     {% for post in collections.posts %}
       <article class="post-card">
         <div class="thumb">
-          {% if post.data.image %}
-            <img src="{{ post.data.image }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
+          {% set cover = post.data.image or (post.templateContent | firstImageSrc) %}
+          {% if cover %}
+            <img src="{{ cover }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
           {% else %}
             <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
               <defs>

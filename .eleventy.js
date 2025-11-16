@@ -100,6 +100,15 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  eleventyConfig.addFilter("firstImageSrc", function(html) {
+    if(!html) return '';
+    const m = html.toString().match(/<img[^>]+src=["']([^"']+)["']/i);
+    if(m && m[1]) return m[1];
+    const m2 = html.toString().match(/!\[[^\]]*\]\(([^)]+)\)/);
+    if(m2 && m2[1]) return m2[1];
+    return '';
+  });
+
   // Create posts collection from posts directory
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("posts/*.md")

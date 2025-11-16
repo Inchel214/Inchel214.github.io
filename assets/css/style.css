@@ -50,12 +50,18 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 .hero h1{font-size:2.0rem;margin:0;letter-spacing:-0.02em}
 .lead{color:var(--muted);margin-top:8px;max-width:500px}
 .cta{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;text-decoration:none;font-weight:600}
+.projects-home .lead .cta{display:inline-block;background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.projects-home .lead .cta:hover,.projects-home .lead .cta:focus{background:transparent;color:var(--accent-2);border-color:var(--accent-2)}
 .hero-illus img, .hero-illus svg{border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35);display:block}
 
 /* 页面主体（文章列表 + 侧边栏） */
 .section-title{color:var(--text);margin-bottom:14px}
 .posts-grid{margin-top:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.projects-home .lead{display:flex;align-items:center;gap:8px;justify-content:space-between;max-width:100%}
+.projects-home .lead .actions{margin-left:auto;display:flex;gap:8px}
+.projects-home .lead .actions .lang-toggle{text-decoration:none}
+.projects-home .lead .actions .lang-toggle:hover,.projects-home .lead .actions .lang-toggle:focus{ text-decoration:none }
 
 .post-card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease}
 .post-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(2,6,23,0.55)}
@@ -122,7 +128,9 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
   .main-nav{display:none}
   .cta{width:100%}
   .grid{grid-template-columns:1fr}
-  .post-card .thumb{aspect-ratio:1/1}
+  .post-card .thumb{display:none}
+  .posts-strips .post-card .thumb{display:none}
+  .projects-home .lead .actions .lang-toggle{width:auto}
 }
 
 /* 阅读页面宽度约束（若未来生成文章页面使用） */
