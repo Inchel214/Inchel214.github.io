@@ -39,26 +39,31 @@ function parseArgs(argv) {
 function main() {
   const { title, date, tags, excerpt } = parseArgs(process.argv);
   const slug = toSlug(title);
-  const fileName = `${date}-${slug || 'post'}.md`;
+  const dirName = `${date}-${slug || 'post'}`;
   const postsDir = path.join(process.cwd(), 'posts');
-  const filePath = path.join(postsDir, fileName);
+  const postDir = path.join(postsDir, dirName);
+  const filePath = path.join(postDir, 'index.md');
 
   if (!fs.existsSync(postsDir)) {
     console.error(`未找到目录: ${postsDir}`);
     process.exit(1);
   }
-  if (fs.existsSync(filePath)) {
-    console.error(`文件已存在: ${filePath}`);
+  if (fs.existsSync(postDir)) {
+    console.error(`目录已存在: ${postDir}`);
     process.exit(1);
   }
+  fs.mkdirSync(postDir, { recursive: true });
+  fs.mkdirSync(path.join(postDir, 'img'));
 
   const fmTags = tags ? `[${tags.split(',').map(t => t.trim()).filter(Boolean).join(', ')}]` : '[]';
   const fmExcerpt = excerpt || '';
 
-  const content = `---\nlayout: post.njk\ntitle: ${title}\ndate: ${date}\ntags: ${fmTags}\nexcerpt: ${fmExcerpt}\n---\n\n开始写作吧！\n`;
+  const content = `---\nlayout: post.njk\ntitle: ${title}\ndate: ${date}\ntags: ${fmTags}\nexcerpt: ${fmExcerpt}\nimage: /posts/${dirName}/img/cover.svg\n---\n\n开始写作吧！\n\n<!-- 将你的图片放到 ./img/ 下，例如 cover.svg，并像这样引用： -->\n<p align=\"center\"><img src=\"./img/cover.svg\" alt=\"封面\"></p>\n`;
 
   fs.writeFileSync(filePath, content, 'utf8');
-  console.log(`已创建新文章: ${filePath}`);
+  console.log(`已创建新文章目录: ${postDir}`);
+  console.log(`文章文件: ${filePath}`);
+  console.log(`图片目录: ${path.join(postDir, 'img')}`);
 }
 
 main();

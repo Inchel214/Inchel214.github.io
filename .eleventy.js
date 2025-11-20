@@ -18,8 +18,9 @@ module.exports = function(eleventyConfig) {
     }
     return null;
   }
-  // passthrough copy for assets directory
+  // passthrough copy for global assets and per-post local images
   eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy("posts/**/img");
 
   // Add small helper filter to render current year in templates
   eleventyConfig.addFilter("year", function() {
@@ -109,9 +110,9 @@ module.exports = function(eleventyConfig) {
     return '';
   });
 
-  // Create posts collection from posts directory
+  // Create posts collection from posts directory (supports file or folder per post)
   eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("posts/*.md")
+    return collectionApi.getFilteredByGlob(["posts/*.md", "posts/*/index.md"]) 
       .map(item => {
         // Prefer git last commit date; fallback to filesystem mtime
         const gitDate = gitLastModifiedDate(item.inputPath);

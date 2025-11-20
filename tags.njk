@@ -8,15 +8,21 @@ layout: base.njk
 title: 标签
 ---
 
-<section class="posts-grid">
+<section class="posts-grid posts-strips">
   <h2 class="section-title">标签：{{ tag }}</h2>
   {% if collections[tag] and collections[tag].length > 0 %}
     <div class="grid">
       {% for post in collections[tag] | reverse %}
         <article class="post-card">
           <div class="thumb">
-            {% if post.data.image %}
-              <img src="{{ post.data.image }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
+            {% set cover = post.data.image or (post.templateContent | firstImageSrc) %}
+            {% if cover and (cover | slice(0,2)) == './' %}
+              {% set cover = (post.url | trim('/')) ~ '/' ~ (cover | replace('./','')) %}
+            {% elseif cover and cover[0] != '/' %}
+              {% set cover = (post.url | trim('/')) ~ '/' ~ cover %}
+            {% endif %}
+            {% if cover %}
+              <img src="{{ cover }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
             {% else %}
               <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
@@ -29,13 +35,14 @@ title: 标签
               </svg>
             {% endif %}
           </div>
-          <div class="post-body">
-            <h3><a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a></h3>
-            <p class="meta"><span data-i18n="updated_label">更新于：</span>{{ (post.data.updated or post.date) | dateLocal("yyyy-LL-dd HH:mm") }}</p>
-            {% if post.data.excerpt %}
-              <p class="excerpt">{{ post.data.excerpt }}</p>
-            {% endif %}
-            <a class="read-more" href="{{ post.url }}" data-i18n="read_more">阅读全文 →</a>
+          <div class="post-info">
+            <div class="post-title">
+              <h3><a href="{{ post.url }}">{{ post.data.title or post.fileSlug }}</a></h3>
+              <p class="meta"><span data-i18n="updated_label">更新于：</span>{{ (post.data.updated or post.date) | dateLocal("yyyy-LL-dd HH:mm") }}</p>
+              {% if post.data.excerpt %}
+                <p class="excerpt">{{ post.data.excerpt }}</p>
+              {% endif %}
+            </div>
           </div>
         </article>
       {% endfor %}

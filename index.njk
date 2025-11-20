@@ -86,6 +86,11 @@ title: 首页
       <article class="post-card">
         <div class="thumb">
           {% set cover = post.data.image or (post.templateContent | firstImageSrc) %}
+          {% if cover and (cover | slice(0,2)) == './' %}
+            {% set cover = (post.url | trim('/')) ~ '/' ~ (cover | replace('./','')) %}
+          {% elseif cover and cover[0] != '/' %}
+            {% set cover = (post.url | trim('/')) ~ '/' ~ cover %}
+          {% endif %}
           {% if cover %}
             <img src="{{ cover }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
           {% else %}
