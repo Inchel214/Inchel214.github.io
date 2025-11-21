@@ -29,7 +29,7 @@
   {% endif %}
 
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
-  <link rel="stylesheet" href="/assets/css/style.css?v={{ (page.inputPath | fileUpdated | date('yyyy-LL-dd-HH-mm-ss')) }}">
+  <link rel="stylesheet" href="/assets/css/style.css?v={{ ('assets/css/style.css' | fileUpdated) | date('yyyy-LL-dd-HH-mm-ss') }}">
   {% if site and site.url %}
   <script type="application/ld+json">
   {
