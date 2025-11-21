@@ -90,7 +90,15 @@ title: 首页
           {% if cover %}
             <img src="{{ cover }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
           {% else %}
-            <img src="/assets/img/sample-cover.svg" alt="{{ post.data.title or post.fileSlug }} 封面图">
+            <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="postCardGrad" x1="0" x2="1">
+                  <stop offset="0%" stop-color="#6C5CE7" />
+                  <stop offset="100%" stop-color="#00B894" />
+                </linearGradient>
+              </defs>
+              <rect width="200" height="100" fill="url(#postCardGrad)"></rect>
+            </svg>
           {% endif %}
         </div>
         <div class="post-info">
