@@ -84,7 +84,7 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 
 /* 布局：在宽屏时 main 为两列（内容 + 侧边栏） */
 @media(min-width:980px){
-  main.container{
+  main.container.home-layout{
     display:grid;
     grid-template-columns:1fr 320px;
     grid-column-gap:24px;
@@ -105,7 +105,7 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 
 /* 中小屏：使用单列网格，侧边栏排在文章列表之前 */
 @media(max-width:979px){
-  main.container{
+  main.container.home-layout{
     display:grid;
     grid-template-columns:1fr;
     grid-row-gap:16px;
@@ -134,7 +134,7 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 }
 
 /* 阅读页面宽度约束（若未来生成文章页面使用） */
-.article-content{max-width:var(--max-read-width);margin:0}
+.article-content{max-width:var(--max-read-width);margin:0 auto}
 
 /* 文章页面样式 */
 .post-header{margin-bottom:1.6rem}
