@@ -14,21 +14,13 @@ title: 标签
     <div class="grid">
       {% for post in collections[tag] | reverse %}
         <article class="post-card">
+          {% set cover = post.data.image or (post.templateContent | firstImageSrc) %}
+          {% set cover = cover | normalizeCoverPath(post.url) %}
           <div class="thumb">
-            {% set cover = post.data.image or (post.templateContent | firstImageSrc) %}
-            {% set cover = cover | normalizeCoverPath(post.url) %}
             {% if cover %}
               <img src="{{ cover }}" alt="{{ post.data.title or post.fileSlug }} 封面图">
             {% else %}
-              <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="cardGrad" x1="0" x2="1">
-                    <stop offset="0%" stop-color="#6C5CE7" />
-                    <stop offset="100%" stop-color="#00B894" />
-                  </linearGradient>
-                </defs>
-                <rect width="100" height="60" fill="url(#cardGrad)"></rect>
-              </svg>
+              <img src="/assets/img/sample-cover.svg" alt="{{ post.data.title or post.fileSlug }} 封面图">
             {% endif %}
           </div>
           <div class="post-info">
