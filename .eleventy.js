@@ -18,9 +18,9 @@ module.exports = function(eleventyConfig) {
     }
     return null;
   }
-  // passthrough copy for global assets and per-post local images
+  // passthrough copy for global assets and all non-template files under posts
   eleventyConfig.addPassthroughCopy("assets");
-  eleventyConfig.addPassthroughCopy("posts/**/img");
+  eleventyConfig.addPassthroughCopy({ "posts": "posts" });
 
   // Add small helper filter to render current year in templates
   eleventyConfig.addFilter("year", function() {
