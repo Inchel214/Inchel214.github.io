@@ -110,6 +110,29 @@ module.exports = function(eleventyConfig) {
     return '';
   });
 
+  // Normalize image paths for card covers
+  eleventyConfig.addFilter("normalizeCoverPath", function(cover, postUrl) {
+    if(!cover) return '';
+    // Handle relative paths starting with ./
+    if(cover.startsWith('./')) {
+      return postUrl.replace(/\/$/, '') + '/' + cover.substring(2);
+    }
+    // Handle relative paths without leading slash
+    if(cover[0] !== '/') {
+      return postUrl.replace(/\/$/, '') + '/' + cover;
+    }
+    return cover;
+  });
+
+  eleventyConfig.addFilter("normalizeContentImages", function(html, postUrl) {
+    if(!html) return '';
+    return html.toString().replace(/(<img[^>]+src=["'])(\.\/[^"']+)(["'])/gi, function(_, p1, src, p3) {
+      const base = postUrl.replace(/\/$/, '');
+      const normalized = base + '/' + src.substring(2);
+      return p1 + normalized + p3;
+    });
+  });
+
   // Create posts collection from posts directory (supports file or folder per post)
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob(["posts/*.md", "posts/*/index.md"]) 

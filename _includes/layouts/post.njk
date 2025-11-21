@@ -26,7 +26,7 @@ layout: base.njk
   {% endif %}
 
   <section class="post-body">
-    {{ content | safe }}
+    {{ content | normalizeContentImages(page.url) | safe }}
   </section>
 
   <footer class="post-footer">
