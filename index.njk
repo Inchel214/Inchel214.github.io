@@ -17,10 +17,11 @@ title: 首页
 <section id="projects-home" class="projects-home">
   <h2 class="section-title" data-i18n="sec_projects">项目</h2>
   <hr class="section-divider">
-  <p class="lead"><span data-lang="zh">华为会议平板智能导播</span> <span class="actions" data-lang="zh"><a class="lang-toggle" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a><a class="lang-toggle" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a><a class="lang-toggle" href="/posts/2025-11-09-胡说八道/">案例文章</a></p>
+  <p class="lead"><span data-lang="zh">华为会议平板智能导播</span> <span class="actions" data-lang="zh"><a class="lang-toggle" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a><a class="lang-toggle" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a><a class="lang-toggle" href="/tags/会议视频AI/">导播相关</a></p>
   {% if projects and projects.length > 0 %}
     <div class="grid">
       {% for p in projects %}
+        {% if loop.index0 != 0 %}
         <article class="project-card">
           <div class="thumb">
             {% if p.cover %}
@@ -50,6 +51,13 @@ title: 首页
               <span>{{ p.period }}</span>
               · <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
             </p>
+            {% if loop.index0 == 0 %}
+            <div class="actions">
+              <a class="chip" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a>
+              <a class="chip" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a>
+              <a class="chip" href="/posts/2025-11-09-胡说八道/">导播相关</a>
+            </div>
+            {% endif %}
             {% if p.stack %}
               <div class="badges">
                 {% for s in p.stack %}
@@ -70,6 +78,7 @@ title: 首页
             {% endif %}
           </div>
         </article>
+        {% endif %}
       {% endfor %}
     </div>
     <p><a class="read-more" href="/projects/"><span data-lang="zh">查看全部项目</span><span data-lang="en">Browse all projects</span> →</a></p>
