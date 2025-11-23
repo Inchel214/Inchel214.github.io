@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "smart-Director",
+    "title_zh": "华为会议平板智能导播",
+    "title_en": "Huawei Meeting Panel AI Director",
+    "one_liner_zh": "智能导播指的是一种利用人工智能和音视频处理技术，自动完成“导播”工作的系统。它能够根据场景和需求，自动选择和切换摄像机画面、调整画面效果，从而实现高效、智能化的直播或会议控制。",
+    "one_liner_en": "Automatic speaker switching in meeting scenarios to achieve autonomous broadcast.",
+    "period": "2020–2024",
+    "status": "in_production",
+    "roles": ["负责人", "后端/AI 核心开发"],
+    "stack": ["昇腾平台", "C++", "人脸检测", "人脸追踪", "相机标定", "视频AI", "算法部署"],
+    "domains": ["视频AI"],
+    "metrics": [
+      {"label_zh": "导播准确率", "label_en": "Director Accuracy", "value": "98%"},
+      {"label_zh": "微服务提代码可复用率", "label_en": "Microservice Code Reusability", "value": "85%"}
+    ],
+    "cover": "/assets/img/sample-cover.svg",
+    "updated": "2025-11-15"
+  },
+  {
+  "slug": "smart-assistant",
+  "title_zh": "智能助手",
+  "title_en": "Smart Assistant",
+  "one_liner_zh": "语音输入实现终端语音控制命令",
+  "one_liner_en": "Voice command control assistant",
+  "period": "2025-2025",
+  "status": "in_production",
+  "roles": ["架构设计", "后端开发 核心开发"],
+  "stack": ["C++", "Java", "ASR", "TTS", "微服务"],
+  "domains": ["视频AI", "效率工具"],
+  "metrics": [
+    {"label_zh": "人机交互体验提升", "label_en": "No Manual Operation", "value": ""}
+  ],
+  "cover": "/assets/img/sample-cover.svg",
+  "updated": "2025-11-15"
+}
+]
