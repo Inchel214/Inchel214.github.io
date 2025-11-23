@@ -21,6 +21,7 @@ module.exports = function(eleventyConfig) {
   // passthrough copy for global assets and all non-template files under posts
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy({ "posts": "posts" });
+  eleventyConfig.addWatchTarget("data");
 
   // Add small helper filter to render current year in templates
   eleventyConfig.addFilter("year", function() {
@@ -131,6 +132,44 @@ module.exports = function(eleventyConfig) {
       const normalized = base + '/' + src.substring(2);
       return p1 + normalized + p3;
     });
+  });
+
+  eleventyConfig.addFilter("sortProjectsByDate", function(arr) {
+    if(!Array.isArray(arr)) return [];
+    function year(x) {
+      const p = x && x.period;
+      if(p) {
+        const m = p.toString().match(/(\d{4})\s*[–-]\s*(\d{4})/);
+        if(m) return parseInt(m[2], 10);
+        const y = p.toString().match(/(\d{4})/);
+        if(y) return parseInt(y[1], 10);
+      }
+      if(x && x.updated) {
+        const d = new Date(x.updated);
+        if(!isNaN(d.getTime())) return d.getFullYear();
+      }
+      return 0;
+    }
+    return arr.slice().sort((a,b) => year(b) - year(a));
+  });
+
+  eleventyConfig.addFilter("sortProjectsByStartYear", function(arr) {
+    if(!Array.isArray(arr)) return [];
+    function y(x) {
+      const p = x && x.period;
+      if(p) {
+        const m = p.toString().match(/(\d{4})\s*[–-]\s*(\d{4})/);
+        if(m) return parseInt(m[1], 10);
+        const s = p.toString().match(/(\d{4})/);
+        if(s) return parseInt(s[1], 10);
+      }
+      if(x && x.updated) {
+        const d = new Date(x.updated);
+        if(!isNaN(d.getTime())) return d.getFullYear();
+      }
+      return 0;
+    }
+    return arr.slice().sort((a,b) => y(b) - y(a));
   });
 
   // Create posts collection from posts directory (supports file or folder per post)

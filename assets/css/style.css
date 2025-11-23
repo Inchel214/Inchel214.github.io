@@ -254,6 +254,8 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
 .project-card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .project-card .body{padding:14px;display:flex;flex-direction:column;gap:6px}
 .projects-home .project-card .body{padding:8px}
+.projects-page .project-card .body{padding-bottom:42px}
+.projects-page .project-card .actions{position:absolute;right:12px;bottom:10px;margin:0}
 
 /* 区块分割线 */
 .section-divider{
@@ -262,12 +264,16 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
   margin:8px 0 18px;
 }
 .project-card .title{margin:0;font-size:1.0rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.project-card .title a.title-link{color:#f0f1f3;text-decoration:none}
+.project-card .title a.title-link:hover,.project-card .title a.title-link:focus{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
 .project-card .title .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;margin-top:0}
 .project-card .title [data-lang="en"]{color:var(--muted)}
 .project-card .one-liner{color:var(--muted);font-size:0.92rem;margin:0}
 .project-card .meta{color:var(--muted);font-size:0.82rem;margin:0;display:flex;align-items:center;gap:6px}
 .project-card .meta span:last-child{margin-left:auto}
 .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.roles{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.domains{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 .badge{display:inline-block;padding:0.2rem 0.55rem;background:var(--surface);border-radius:999px;border:1px solid rgba(255,255,255,0.1);font-size:0.8rem;color:var(--text)}
 .metrics{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .metric-chip{display:inline-block;padding:0.2rem 0.55rem;border-radius:999px;background:rgba(96,165,250,0.18);color:#fff;font-size:0.8rem}

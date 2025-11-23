@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = () => {
   const dir = path.join(__dirname, 'projects');
-  const arrPath = path.join(__dirname, 'projects.base.json');
+  const arrPath = path.join(__dirname, '..', 'data', 'projects.base.json');
   let items = [];
   if (fs.existsSync(dir)) {
     const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));

@@ -4,19 +4,9 @@
   "title_en": "Smart Meeting Assistant",
   "one_liner_zh": "语音与视频协同的会议辅助工具，自动记录与摘要",
   "one_liner_en": "Voice-video assisted meeting tool with auto notes and summaries",
-  "period": "2024–2025",
+  "period": "2026",
   "status": "in_progress",
-  "roles": ["产品设计", "后端开发"],
-  "stack": ["Node.js", "Python", "OpenAI", "FFmpeg"],
-  "domains": ["会议AI", "效率工具"],
-  "metrics": [
-    {"label_zh": "会议记录准确率", "label_en": "Note Accuracy", "value": "+20%"},
-    {"label_zh": "节省时间", "label_en": "Time Saved", "value": "-30%"}
-  ],
-  "cover": "/assets/img/sample-cover.svg",
-  "links": {
-    "demo": "#",
-    "post": "/posts/2025-11-09-胡说八道/"
-  },
-  "updated": "2025-11-10"
+  "roles": ["全栈开发"],
+  "stack": ["Python", "OpenAI", "C++", "智能体"],
+  "domains": ["视频AI", "效率工具"]
 }

@@ -26,17 +26,34 @@ title: 项目
         </div>
         <div class="body">
           <h3 class="title">
-            <span data-lang="zh">{{ p.title_zh }}</span>
-            <span data-lang="en">{{ p.title_en }}</span>
+            {% set pt = p.tag or p.slug %}
+            {% if pt and collections[pt] and collections[pt].length > 0 %}
+              <a class="title-link" href="/tags/{{ pt }}/">
+                <span data-lang="zh">{{ p.title_zh }}</span>
+                <span data-lang="en">{{ p.title_en }}</span>
+              </a>
+            {% else %}
+              <span data-lang="zh">{{ p.title_zh }}</span>
+              <span data-lang="en">{{ p.title_en }}</span>
+            {% endif %}
           </h3>
-          <p class="one-liner">
-            <span data-lang="zh">{{ p.one_liner_zh }}</span>
-            <span data-lang="en">{{ p.one_liner_en }}</span>
-          </p>
           <p class="meta">
             <span>{{ p.period }}</span>
             <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
           </p>
+          <p class="one-liner">
+            <span data-lang="zh">{{ p.one_liner_zh }}</span>
+            <span data-lang="en">{{ p.one_liner_en }}</span>
+          </p>
+          {% if p.roles %}
+            <div class="roles">
+              {% for r in p.roles %}
+                <span class="badge">{{ r }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {# domains hidden per request #}
 
           {% if p.stack %}
             <div class="badges">
@@ -52,20 +69,17 @@ title: 项目
                 <span class="metric-chip">
                   <span data-lang="zh">{{ m.label_zh }}</span>
                   <span data-lang="en">{{ m.label_en }}</span>
-                  ：{{ m.value }}
+                  {% if m.value %}：{{ m.value }}{% endif %}
                 </span>
               {% endfor %}
             </div>
           {% endif %}
 
-          <p class="actions">
-            {% if p.links and p.links.demo %}
-              <a href="{{ p.links.demo }}" class="read-more"><span data-lang="zh">查看 Demo</span><span data-lang="en">View Demo</span> →</a>
-            {% endif %}
-            {% if p.links and p.links.post %}
-              <a href="{{ p.links.post }}" class="read-more"><span data-lang="zh">案例/文章</span><span data-lang="en">Case/Article</span> →</a>
-            {% endif %}
-          </p>
+          {% if p.links and p.links.post %}
+            <p class="actions">
+              <a href="{{ p.links.post }}" class="read-more"><span data-lang="zh">案例/文章</span><span data-lang="en">Case/Article</span></a>
+            </p>
+          {% endif %}
         </div>
       </article>
     {% endfor %}
