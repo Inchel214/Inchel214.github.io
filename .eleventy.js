@@ -206,6 +206,14 @@ module.exports = function(eleventyConfig) {
       })
       .slice(0, 10);
   });
+  eleventyConfig.setBrowserSyncConfig({
+    injectChanges: false,
+    reloadDebounce: 500,
+    reloadDelay: 200,
+    ghostMode: false,
+    logFileChanges: false,
+    notify: false,
+  });
 
   // i18n shortcodes for bilingual content in Markdown
   // Usage in .md: 

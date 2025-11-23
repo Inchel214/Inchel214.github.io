@@ -5,6 +5,7 @@
   --muted: #94a3b8;
   --accent: #60A5FA; /* 浅蓝主色，替换原紫色 */
   --accent-2: #00B894;
+  --danger: #EF4444;
   --text: #e6eef8;
   --container: 1100px;
   --radius: 10px;
@@ -91,6 +92,7 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 .grid .post-card{height:100%}
 .post-card .post-info{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .post-card .post-title h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;min-height:calc(2 * 1.3em)}
+.post-card .post-title .meta{margin:0;line-height:1;font-size:0.82rem;margin-top:2px}
 .post-card .post-title .excerpt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.45;min-height:calc(3 * 1.45em)}
 
 /* 侧边栏 */
@@ -243,12 +245,15 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
 
 /* 项目卡片样式 */
 .projects-page .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-.projects-home .grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-.project-card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease}
+.projects-home .grid{grid-template-columns:1fr}
+.project-card{display:flex;flex-direction:column;background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .16s ease,box-shadow .16s ease;position:relative}
+.projects-home .project-card{flex-direction:column;gap:8px;align-items:stretch}
 .project-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(2,6,23,0.55)}
 .project-card .thumb{height:120px;overflow:hidden}
+.projects-home .project-card .thumb{flex:0 0 24%;min-width:170px;aspect-ratio:1/1;overflow:hidden}
 .project-card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .project-card .body{padding:14px;display:flex;flex-direction:column;gap:6px}
+.projects-home .project-card .body{padding:8px}
 
 /* 区块分割线 */
 .section-divider{
@@ -256,9 +261,12 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
   border-top:2px solid rgba(255,255,255,0.30);
   margin:8px 0 18px;
 }
-.project-card .title{margin:0;font-size:1.0rem;color:var(--text)}
+.project-card .title{margin:0;font-size:1.0rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.project-card .title .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;margin-top:0}
+.project-card .title [data-lang="en"]{color:var(--muted)}
 .project-card .one-liner{color:var(--muted);font-size:0.92rem;margin:0}
-.project-card .meta{color:var(--muted);font-size:0.82rem;margin:0}
+.project-card .meta{color:var(--muted);font-size:0.82rem;margin:0;display:flex;align-items:center;gap:6px}
+.project-card .meta span:last-child{margin-left:auto}
 .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 .badge{display:inline-block;padding:0.2rem 0.55rem;background:var(--surface);border-radius:999px;border:1px solid rgba(255,255,255,0.1);font-size:0.8rem;color:var(--text)}
 .metrics{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
@@ -271,10 +279,10 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
 .posts-strips .post-card .thumb img,.posts-strips .post-card .thumb svg{width:100%;height:100%;object-fit:contain;display:block}
 .posts-strips .post-info{flex:1;display:flex;flex-direction:column;gap:6px;padding:8px}
 .posts-strips .post-title{position:static;padding:0;background:none;color:var(--text)}
-.posts-strips .post-title h3{margin:0}
-.posts-strips .post-title h3 a{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.6);font-weight:700;font-size:1.12rem;text-decoration:none}
+.posts-strips .post-title h3{margin:0;display:block;line-height:1.2;min-height:auto;overflow:visible}
+.posts-strips .post-title h3 a{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,0.6);font-weight:700;font-size:1.12rem;text-decoration:none;line-height:1;display:block}
 .posts-strips .post-title h3 a:hover,.posts-strips .post-title h3 a:focus{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
-.posts-strips .post-title .meta{margin:0;line-height:1.35;color:var(--muted);font-size:0.82rem}
+.posts-strips .post-title .meta{margin:0;line-height:1;color:var(--muted);font-size:0.82rem;margin-top:20px}
 .posts-strips .post-title .excerpt{color:var(--muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:0.6rem}
 .posts-strips .post-body{position:static;display:flex;flex-direction:column;gap:4px;padding:0;color:var(--text)}
 .posts-strips .tags-inline{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 6px}
@@ -284,3 +292,14 @@ aside.sidebar .card a:focus{ text-decoration:underline; text-underline-offset:3p
   .posts-strips .grid{grid-template-columns:1fr}
   .posts-strips .post-card .thumb{min-width:100px;aspect-ratio:2/1}
 }
+@media(max-width:720px){
+  .projects-home .project-card .thumb{display:none}
+}
+aside.sidebar #projects ul{list-style:none;padding-left:0;margin:0}
+aside.sidebar #projects ul li{display:flex;align-items:center;gap:8px}
+aside.sidebar #projects ul li a{flex:1}
+aside.sidebar #projects ul li .badge{margin-left:auto !important}
+aside.sidebar #projects ul li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--muted);flex:0 0 auto}
+aside.sidebar #projects ul li.status-in_production::before{background:var(--accent-2)}
+aside.sidebar #projects ul li.status-in_progress::before{background:var(--danger)}
+aside.sidebar #projects ul li.status-experimental::before{background:rgba(255,255,255,0.55)}

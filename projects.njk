@@ -35,7 +35,7 @@ title: 项目
           </p>
           <p class="meta">
             <span>{{ p.period }}</span>
-            · <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
+            <span>{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">In Production</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">In Progress</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
           </p>
 
           {% if p.stack %}
