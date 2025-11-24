@@ -227,12 +227,24 @@ module.exports = function(eleventyConfig) {
 
   // Create topTags collection: first 10 tags by article count
   eleventyConfig.addCollection("topTags", function(collectionApi) {
+    const getProjects = require('./_data/projects');
+    const projSet = new Set();
+    try {
+      const projects = getProjects();
+      if (Array.isArray(projects)) {
+        projects.forEach(p => {
+          const tt = (p && (p.tag || p.slug)) || '';
+          if (tt) projSet.add(tt);
+        });
+      }
+    } catch(_) {}
     const counts = {};
     collectionApi.getAll().forEach(item => {
       const t = item.data && item.data.tags;
       if (Array.isArray(t)) {
         t.forEach(tag => {
           if (!tag) return;
+          if (projSet.has(tag)) return;
           counts[tag] = (counts[tag] || 0) + 1;
         });
       }

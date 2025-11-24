@@ -60,7 +60,7 @@
       <div class="header-actions">
         <nav class="main-nav" role="navigation" aria-label="主要导航">
           <a href="{{ homeHref }}" {% if page.url == '/' %}aria-current="page"{% endif %} data-i18n="nav_home">首页</a>
-          <a href="{{ homeHref }}#projects-home" data-i18n="nav_projects">项目</a>
+          <a href="{{ homeHref }}projects/" data-i18n="nav_projects">项目</a>
           <a href="{{ homeHref }}#posts" data-i18n="nav_posts">文章</a>
           <a href="{{ homeHref }}#about" data-i18n="nav_about">关于</a>
           <a href="{{ homeHref }}#contact" data-i18n="nav_contact">联系我</a>
@@ -80,6 +80,32 @@
     </div>
   </footer>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var links = document.querySelectorAll('.main-nav a[href*="#"]');
+      Array.prototype.forEach.call(links, function(a) {
+        a.addEventListener('click', function(e) {
+          var href = a.getAttribute('href') || '';
+          var hashIndex = href.indexOf('#');
+          if (hashIndex === -1) return;
+          var id = href.substring(hashIndex + 1);
+          if (!id) return;
+          var sameOrigin = true;
+          try {
+            var u = new URL(href, window.location.origin);
+            sameOrigin = (u.origin === window.location.origin && u.pathname === '/');
+          } catch(_) {}
+          if (sameOrigin) {
+            var el = document.getElementById(id);
+            if (el) {
+              e.preventDefault();
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+    });
+  </script>
   <script src="/assets/js/lang.js"></script>
 
 </body>

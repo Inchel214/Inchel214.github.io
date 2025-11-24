@@ -2,7 +2,7 @@
 layout: post.njk
 title: transformer
 date: 2025-11-20
-tags: [transformer, 深度学习, smart-assistant, smart-meeting-assistant]
+tags: [transformer, 深度学习, smart-assistant, 智能会议助手]
 excerpt: 以注意力取代循环，提升并行与长距依赖建模；概述核心机制、训练要点与长序列改进的实践建议。
 # image: /posts/2025-11-20-transformer/img/attention.png
 ---

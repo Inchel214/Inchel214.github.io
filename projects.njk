@@ -27,14 +27,16 @@ title: 项目
         <div class="body">
           <h3 class="title">
             {% set pt = p.tag or p.slug %}
-            {% if pt and collections[pt] and collections[pt].length > 0 %}
+            {% if pt and collections.tagList and (pt in collections.tagList) %}
               <a class="title-link" href="/tags/{{ pt }}/">
                 <span data-lang="zh">{{ p.title_zh }}</span>
                 <span data-lang="en">{{ p.title_en }}</span>
               </a>
             {% else %}
-              <span data-lang="zh">{{ p.title_zh }}</span>
-              <span data-lang="en">{{ p.title_en }}</span>
+              <span class="title-disabled">
+                <span data-lang="zh">{{ p.title_zh }}</span>
+                <span data-lang="en">{{ p.title_en }}</span>
+              </span>
             {% endif %}
           </h3>
           <p class="meta">

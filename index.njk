@@ -24,20 +24,22 @@ title: 首页
           <div class="body">
             <h3 class="title">
               {% set pt = p.tag or p.slug %}
-              {% if pt and collections[pt] and collections[pt].length > 0 %}
+              {% if pt and collections.tagList and (pt in collections.tagList) %}
                 <a class="title-link" href="/tags/{{ pt }}/">
                   <span data-lang="zh">{{ p.title_zh }}</span>
                   <span data-lang="en">{{ p.title_en }}</span>
                 </a>
               {% else %}
-                <span data-lang="zh">{{ p.title_zh }}</span>
-                <span data-lang="en">{{ p.title_en }}</span>
+                <span class="title-disabled">
+                  <span data-lang="zh">{{ p.title_zh }}</span>
+                  <span data-lang="en">{{ p.title_en }}</span>
+                </span>
               {% endif %}
               {% if p.slug == 'smart-Director' %}
-              <span class="actions">
-                <a class="chip" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a>
-                <a class="chip" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a>
-              </span>
+                <span class="actions">
+                  <a class="chip" href="https://www.bilibili.com/video/BV11e9zYhEDA/?spm_id_from=333.337.search-card.all.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">视频：语音跟踪/双人对话</a>
+                  <a class="chip" href="https://www.bilibili.com/video/BV1PH7GzBEWH/?spm_id_from=333.1387.upload.video_card.click&vd_source=d3c8ff3acdf214ee3f8d964294d6f2a1">S3导播</a>
+                </span>
               {% endif %}
             </h3>
             <p class="meta">
@@ -140,11 +142,18 @@ title: 首页
     {% if projects and projects.length > 0 %}
       <ul>
         {% for p in (projects | sortProjectsByDate) %}
+          {% set pt = p.tag or p.slug %}
+          {% set clickable = collections.tagList and (pt in collections.tagList) %}
           <li class="status-{{ p.status }}">
-            <a href="/projects/">
-              <span data-lang="zh">{{ p.title_zh }}</span>
-              <span data-lang="en">{{ p.title_en }}</span>
-            </a>
+            {% if clickable %}
+              <a href="/tags/{{ pt }}/">
+                <span data-lang="zh">{{ p.title_zh }}</span>
+                <span data-lang="en">{{ p.title_en }}</span>
+              </a>
+            {% else %}
+                <span data-lang="zh">{{ p.title_zh }}</span>
+                <span data-lang="en">{{ p.title_en }}</span>
+            {% endif %}
             <span class="badge" style="margin-left:6px">{% if p.status == 'in_production' %}<span data-lang="zh">已上线</span><span data-lang="en">Live</span>{% elseif p.status == 'in_progress' %}<span data-lang="zh">进行中</span><span data-lang="en">WIP</span>{% else %}<span data-lang="zh">实验</span><span data-lang="en">Experimental</span>{% endif %}</span>
           </li>
         {% endfor %}
@@ -156,11 +165,20 @@ title: 首页
   <section id="tags" class="card">
     <h3 data-i18n="sec_tags">标签</h3>
     {% if collections.topTags and collections.topTags.length > 0 %}
+      {% set projTags = [] %}
+      {% if projects and projects.length > 0 %}
+        {% for p in projects %}
+          {% set pt = p.tag or p.slug %}
+          {% if pt %}{% set projTags = projTags.concat([pt]) %}{% endif %}
+        {% endfor %}
+      {% endif %}
       <div class="tag-badges">
         {% for t in collections.topTags %}
-          <a class="tag" href="/tags/{{ t.tag }}/" title="{{ t.tag }} {{ t.count }}">
-            {{ t.tag }}<span class="badge">{{ t.count }}</span>
-          </a>
+          {% if projTags.indexOf(t.tag) == -1 %}
+            <a class="tag" href="/tags/{{ t.tag }}/" title="{{ t.tag }} {{ t.count }}">
+              {{ t.tag }}<span class="badge">{{ t.count }}</span>
+            </a>
+          {% endif %}
         {% endfor %}
       </div>
     {% else %}
