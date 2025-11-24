@@ -1,21 +1,27 @@
 
 # Inchel214.github.io（Eleventy 博客）
 
-一个用 Eleventy（11ty）构建的静态博客站点。保持功能简单可靠，默认开启：文章列表、封面图、RSS、站点地图与易读的暗色主题。
+一个基于 Eleventy（11ty）的静态博客与项目展示站点。聚焦稳定构建、易读主题与轻量交互，内置标签体系、项目数据、双语切换、RSS 与站点地图。
 
-## 特性概览
-- 基于 Eleventy 的静态生成，输出目录 `public/`
-- 文章集合 `collections.posts` 自动按更新时间倒序
-- 首页文章卡片支持封面图（Front Matter `image` 字段）或渐变占位
-- 无障碍与可读性：键盘聚焦可见、链接悬停出现下划线提示
-- 订阅与 SEO：`/feed.xml`、`/sitemap.xml`
+## 功能概览
+- 静态生成与输出：`eleventy` 生成至 `public/`
+- 文章集合：`collections.posts` 按“最后更新”倒序（优先 Git 提交时间）
+- 封面图：支持 Front Matter `image` 或自动提取正文第一张图片；相对路径自动规范化
+- 标签系统：标签索引页与标签聚合页；侧栏 Top10 自动排除“项目相关标签”
+- 项目模块：从 `_data/projects/*.json` 与 `data/projects.base.json` 聚合；首页项目卡片与项目列表页
+- 国际化：`data-i18n` 字典 + `data-lang` 双语片段 + 语言切换按钮（中文/英文）
+- 无障碍与交互：可见的键盘聚焦、链接悬停提示、同页锚点平滑滚动
+- 订阅与 SEO：`/feed.xml`、`/sitemap.xml`、Canonical、OG、结构化数据（WebSite/Person）
 
 ## 目录结构
-- `posts/` 文章 Markdown 文件（Front Matter 定义元信息）
-- `_includes/layouts/` 页面与文章模板（`base.njk`、`post.njk`）
-- `index.njk` 首页模板（Hero、最新文章、侧栏）
-- `assets/` 静态资源（CSS、图片）
-- `.eleventy.js` Eleventy 配置与过滤器
+- `posts/` 文章 Markdown（Front Matter 定义标题、日期、标签、摘要、封面等）
+- `_includes/layouts/` 模板（`base.njk` 页面框架、`post.njk` 文章模板）
+- `index.njk` 首页模板（Hero、项目、最新文章、侧栏）
+- `projects.njk` 项目列表页
+- `tags.njk` 标签聚合页；`tags-index.njk` 标签索引页（支持搜索）
+- `assets/` 静态资源（`css/`、`img/`、`js/`）
+- `_data/` 站点数据（`site.json`、`env.js`、`projects.js` 与 `projects/*.json`）
+- `.eleventy.js` Eleventy 配置：过滤器、集合、短代码、浏览器同步配置
 - `.github/workflows/pages.yml` 自动部署到 GitHub Pages
 
 ## 本地开发
@@ -25,20 +31,19 @@ npm ci
 
 # 2) 本地预览（含热刷新）
 npm start
-# 预览地址：http://localhost:8080/
+# 默认预览：http://localhost:8080/
 
 # 3) 仅构建（生成静态文件到 public/）
 npm run build
 ```
-
-备注：仓库中附带 `nodejs-portable`（仅用于本地开发环境），GitHub Actions 部署使用官方 Node 环境，不依赖该目录。
+说明：`_data/env.js` 暴露 `isProd`，用于生产环境样式版本戳与首页链接根路径；浏览器同步在 `.eleventy.js` 中配置（关闭热注入、降低抖动，提升稳定性）。
 
 ## 写作与 Front Matter
 推荐使用脚本快速新建文章：
 ```bash
 npm run new:post -- "文章标题" --tags "后端,微服务" --excerpt "一两句摘要"
 ```
-生成文件位于 `posts/YYYY-MM-DD-标题转slug.md`。可选封面：在 Front Matter 增加 `image` 字段：
+示例 Front Matter：
 ```yaml
 ---
 layout: post.njk
@@ -46,48 +51,68 @@ title: 如何设计高可用的微服务架构
 date: 2025-11-08
 tags: [架构, 后端, 微服务]
 excerpt: 介绍构建高可用微服务的关键原则……
-image: /assets/img/sample-cover.svg  # 可选：文章封面图
+image: /assets/img/sample-cover.svg
 ---
-
-正文内容从这里开始（支持 Markdown）。
 ```
-
 字段说明：
-- `layout` 固定为 `post.njk`（使用文章模板）
-- `date` 用于文章发布时间；页面显示为北京时间（Asia/Shanghai）格式化值
-- `tags` 用于生成标签集合（`_includes/layouts/post.njk` 中显示）
+- `layout` 固定为 `post.njk`
+- `date` 文章发布时间；页面显示为北京时间（Asia/Shanghai）
+- `tags` 生成标签集合（出现在文章页与标签索引/聚合页）
 - `excerpt` 首页卡片摘要（可选）
-- `image` 首页卡片封面图（可选）。建议尺寸比例 3:2，示例路径 `/assets/img/xxx.svg|png|jpg`
+- `image` 首页卡片封面图（可选，建议 3:2）；正文相对图片路径如 `./img/xxx.png` 会被规范化到 `posts/.../img/xxx.png`
+
+### 双语内容与文案切换
+- 页面内文案：在元素上使用 `data-i18n="key"`，中文/英文文案在 `assets/js/lang.js` 的 `dict.zh/en` 中维护
+- 双语片段：在 Markdown 内使用短代码
+  ```njk
+  {% zh %}中文内容{% endzh %}
+  {% en %}English content{% enden %}
+  ```
+- 语言切换：点击右上角按钮在 `zh/en` 间切换；`data-lang="zh|en"` 片段会随语言显示/隐藏
+
+## 项目数据与展示
+- 数据来源：`_data/projects/*.json` 与 `data/projects.base.json`，由 `_data/projects.js` 聚合、去重并按 `updated` 降序
+- 字段示例：
+  ```json
+  {
+    "slug": "智能会议助手",
+    "title_zh": "智能会议助手",
+    "title_en": "Smart Meeting Assistant",
+    "one_liner_zh": "语音与视频协同的会议辅助工具，自动记录与摘要",
+    "one_liner_en": "Voice-video assisted meeting tool with auto notes and summaries",
+    "period": "2026",
+    "status": "in_progress",
+    "roles": ["全栈开发"],
+    "stack": ["Python", "OpenAI", "C++", "智能体"],
+    "tag": "智能会议助手"  // 可选，若省略则使用 slug
+  }
+  ```
+- 可点击逻辑：项目卡片标题会尝试链接到 `/tags/{tag or slug}/`，仅当该标签存在于 `collections.tagList` 时可点击（否则展示禁用样式）
+- 首页导航：顶部“项目”链接跳转 `/projects/`
+- 侧栏 Top10 标签：构建时排除所有项目标签，避免“项目相关标签”参与前十统计；模板层再次过滤确保展示正确
+
+### 新建项目（脚本）
+```bash
+npm run new:project -- "项目名称" --period "2025-2026" --roles "后端开发,架构设计" --stack "Python,OpenAI" --metrics "指标A:80%,指标B:1.2x"
+```
+脚本会生成基础 JSON 文件；可根据需要增补 `title_zh/en`、`one_liner_zh/en`、`tag` 等。
+
+## 标签页与搜索
+- 标签索引：`/tags/` 展示所有标签，附带最近更新日期与文章数量
+- 即时搜索：输入框 `#tagSearch`（`tags-index.njk`）配合 `assets/js/tags-search.js`，按标签名称实时筛选；无匹配时显示提示
+- 标签聚合页：`/tags/{tag}/` 展示该标签下的所有文章卡片
 
 ## 部署与自动化
-- 推送到 `main` 分支后，`pages.yml` 会执行构建并把 `public/` 发布到 GitHub Pages。
-- 构建中使用的日期过滤器对无效日期具备容错（避免由于错误 Front Matter 导致构建失败）。
+- 推送到 `main` 分支后，`pages.yml` 执行构建，将 `public/` 发布到 GitHub Pages
+- Eleventy 配置中的日期过滤器与更新时间获取（优先 Git 最后提交时间，失败回退到文件 mtime）提升构建稳定性
 
-## 如何上传 Markdown 文件（推荐流程）
-你可以通过 GitHub 网页或命令行上传文章，二选一：
-
-1) 网页方式（最简单）
-- 打开仓库的 `posts/` 目录，点击“Add file” → “Create new file”
-- 粘贴完整的 Markdown（含上面的 Front Matter）
-- 命名文件（例如：`2025-11-08-hello-eleventy.md`），提交到 `main`
-- GitHub Actions 会自动构建并发布，几分钟后访问站点即可看到更新
-
-2) 命令行方式（配合脚本）
-```bash
-git checkout main
-git pull
-npm run new:post -- "你的标题" --tags "随笔" --excerpt "摘要"
-# 可选：在生成的文件头部增加封面 image 字段
-git add posts/*.md
-git commit -m "Add post: 你的标题"
-git push
-```
-
-（可选，高级）私有内容仓库
-- 如需在构建时从私有内容仓库拉取 `posts/`，可使用 GitHub Actions 在构建步骤中 checkout 私库并复制到当前仓库的 `posts/`。本仓库当前未启用该方案；如需启用，请在 Issues 中说明，我会提供工作流与权限配置示例。
+## 常见问题与修复
+- 项目标签参与侧栏前十：已通过集合层与模板层双重过滤排除（`.eleventy.js` 中 `topTags` + `index.njk` 二次过滤）
+- 导航“冻结”：首页同页锚点已启用平滑滚动脚本；“项目”链接改为 `/projects/`，避免误触发锚点逻辑
+- 图片路径规范化：正文相对路径（如 `./img/xxx.png`）在构建时自动转为站点内可访问路径
 
 ## 维护建议
-- 在 `assets/img/` 放置图片资源，并在 Front Matter 中引用相对路径（以 `/assets/...` 开头）。
-- 标签尽量使用简短中文或英文单词，避免特殊符号。
-- 如需调整链接样式或封面高度，可在 `assets/css/style.css` 中修改对应注释段落。
+- 图片放置在 `assets/img/` 并使用以 `/assets/...` 开头的站点路径或相对路径加 `normalizeCoverPath`
+- 标签简洁明确（中文或英文），避免特殊符号；项目 `tag` 或 `slug` 建议与文章标签保持一致以启用点击跳转
+- 样式调整可在 `assets/css/style.css` 完成；移动端默认隐藏 `.main-nav`，需要导航可新增开合菜单
 
