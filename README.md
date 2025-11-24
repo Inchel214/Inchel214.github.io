@@ -70,33 +70,6 @@ image: /assets/img/sample-cover.svg
   ```
 - 语言切换：点击右上角按钮在 `zh/en` 间切换；`data-lang="zh|en"` 片段会随语言显示/隐藏
 
-## 项目数据与展示
-- 数据来源：`_data/projects/*.json` 与 `data/projects.base.json`，由 `_data/projects.js` 聚合、去重并按 `updated` 降序
-- 字段示例：
-  ```json
-  {
-    "slug": "智能会议助手",
-    "title_zh": "智能会议助手",
-    "title_en": "Smart Meeting Assistant",
-    "one_liner_zh": "语音与视频协同的会议辅助工具，自动记录与摘要",
-    "one_liner_en": "Voice-video assisted meeting tool with auto notes and summaries",
-    "period": "2026",
-    "status": "in_progress",
-    "roles": ["全栈开发"],
-    "stack": ["Python", "OpenAI", "C++", "智能体"],
-    "tag": "智能会议助手"  // 可选，若省略则使用 slug
-  }
-  ```
-- 可点击逻辑：项目卡片标题会尝试链接到 `/tags/{tag or slug}/`，仅当该标签存在于 `collections.tagList` 时可点击（否则展示禁用样式）
-- 首页导航：顶部“项目”链接跳转 `/projects/`
-- 侧栏 Top10 标签：构建时排除所有项目标签，避免“项目相关标签”参与前十统计；模板层再次过滤确保展示正确
-
-### 新建项目（脚本）
-```bash
-npm run new:project -- "项目名称" --period "2025-2026" --roles "后端开发,架构设计" --stack "Python,OpenAI" --metrics "指标A:80%,指标B:1.2x"
-```
-脚本会生成基础 JSON 文件；可根据需要增补 `title_zh/en`、`one_liner_zh/en`、`tag` 等。
-
 ## 标签页与搜索
 - 标签索引：`/tags/` 展示所有标签，附带最近更新日期与文章数量
 - 即时搜索：输入框 `#tagSearch`（`tags-index.njk`）配合 `assets/js/tags-search.js`，按标签名称实时筛选；无匹配时显示提示
