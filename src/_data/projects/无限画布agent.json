@@ -1,0 +1,12 @@
+{
+  "slug": "无限画布agent",
+  "title_zh": "无限画布agent",
+  "title_en": "Infinite Canvas Agent",
+  "one_liner_zh": "在可自由扩展的画布上用 AI Agent 编排节点、生成与整理内容",
+  "one_liner_en": "AI agent on an infinite canvas for orchestrating nodes and organizing generated content",
+  "period": "2026",
+  "status": "in_progress",
+  "roles": ["全栈开发"],
+  "stack": ["Python", "TS", "智能体"],
+  "domains": ["设计AI", "效率工具"]
+}
