@@ -1,6 +1,1 @@
-index.html
-build.py
-nodejs-portable/
-nodejs-portable.zip
-nodejs-installer.msi
-posts/_template.md
+src/posts/_template.md

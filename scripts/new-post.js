@@ -40,7 +40,7 @@ function main() {
   const { title, date, tags, excerpt } = parseArgs(process.argv);
   const slug = toSlug(title);
   const dirName = `${date}-${slug || 'post'}`;
-  const postsDir = path.join(process.cwd(), 'posts');
+  const postsDir = path.join(process.cwd(), 'src', 'posts');
   const postDir = path.join(postsDir, dirName);
   const filePath = path.join(postDir, 'index.md');
 

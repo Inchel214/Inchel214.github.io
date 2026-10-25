@@ -8,21 +8,32 @@
 - 文章集合：`collections.posts` 按“最后更新”倒序（优先 Git 提交时间）
 - 封面图：支持 Front Matter `image` 或自动提取正文第一张图片；相对路径自动规范化
 - 标签系统：标签索引页与标签聚合页；侧栏 Top10 自动排除“项目相关标签”
-- 项目模块：从 `_data/projects/*.json` 与 `data/projects.base.json` 聚合；首页项目卡片与项目列表页
+- 项目模块：从 `src/_data/projects/*.json` 与 `src/_data/projects.base.json` 聚合；首页项目卡片与项目列表页
 - 国际化：`data-i18n` 字典 + `data-lang` 双语片段 + 语言切换按钮（中文/英文）
 - 无障碍与交互：可见的键盘聚焦、链接悬停提示、同页锚点平滑滚动
 - 订阅与 SEO：`/feed.xml`、`/sitemap.xml`、Canonical、OG、结构化数据（WebSite/Person）
 
 ## 目录结构
-- `posts/` 文章 Markdown（Front Matter 定义标题、日期、标签、摘要、封面等）
-- `_includes/layouts/` 模板（`base.njk` 页面框架、`post.njk` 文章模板）
-- `index.njk` 首页模板（Hero、项目、最新文章、侧栏）
-- `projects.njk` 项目列表页
-- `tags.njk` 标签聚合页；`tags-index.njk` 标签索引页（支持搜索）
-- `assets/` 静态资源（`css/`、`img/`、`js/`）
-- `_data/` 站点数据（`site.json`、`env.js`、`projects.js` 与 `projects/*.json`）
-- `.eleventy.js` Eleventy 配置：过滤器、集合、短代码、浏览器同步配置
-- `.github/workflows/pages.yml` 自动部署到 GitHub Pages
+```
+.
+├─ .eleventy.js            # Eleventy 配置：过滤器、集合、短代码、BrowserSync
+├─ package.json
+├─ scripts/                # new-post.js / new-project.js
+├─ .github/workflows/      # GitHub Pages 自动部署
+└─ src/                    # Eleventy 输入目录
+   ├─ index.njk            # 首页
+   ├─ projects.njk         # 项目列表页
+   ├─ tags.njk             # 标签聚合页
+   ├─ tags-index.njk       # 标签索引页（支持搜索）
+   ├─ feed.xml.njk / sitemap.xml.njk / robots.txt.njk
+   ├─ _includes/layouts/   # base.njk 页面框架、post.njk 文章模板
+   ├─ _data/               # site.json、env.js、projects.js、projects/*.json
+   ├─ posts/               # 文章，统一为 <日期-slug>/index.md，同级 img/ 放配图
+   └─ assets/              # 全局静态资源 css/ img/ js/
+```
+构建产物输出到 `public/`（已被 .gitignore 忽略）。
+- 文章只识别 `src/posts/*/index.md`，新建文章请用 `npm run new:post` 保持目录结构一致
+- `addPassthroughCopy` 只复制 `src/assets` 与文章内的图片后缀，Markdown 源文件不会进入产物
 
 ## 本地开发
 ```bash

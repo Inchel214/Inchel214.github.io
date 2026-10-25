@@ -76,7 +76,7 @@ function parseArgs(argv) {
 
 function main() {
   const args = parseArgs(process.argv);
-  const dir = path.join(__dirname, '..', '_data', 'projects');
+  const dir = path.join(__dirname, '..', 'src', '_data', 'projects');
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   const slug = toSlug(args.titleEn || args.titleZh);
   const item = {

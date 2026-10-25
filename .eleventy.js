@@ -18,10 +18,9 @@ module.exports = function(eleventyConfig) {
     }
     return null;
   }
-  // passthrough copy for global assets and all non-template files under posts
-  eleventyConfig.addPassthroughCopy("assets");
-  eleventyConfig.addPassthroughCopy({ "posts": "posts" });
-  eleventyConfig.addWatchTarget("data");
+  // passthrough copy for global assets and post-local images (markdown sources are not copied)
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy("src/posts/**/*.{png,jpg,jpeg,svg,gif,webp,avif}");
 
   // Add small helper filter to render current year in templates
   eleventyConfig.addFilter("year", function() {
@@ -174,7 +173,7 @@ module.exports = function(eleventyConfig) {
 
   // Create posts collection from posts directory (supports file or folder per post)
   eleventyConfig.addCollection("posts", function(collectionApi) {
-    return collectionApi.getFilteredByGlob(["posts/*.md", "posts/*/index.md"]) 
+    return collectionApi.getFilteredByGlob(["src/posts/*/index.md"]) 
       .map(item => {
         // Prefer git last commit date; fallback to filesystem mtime
         const gitDate = gitLastModifiedDate(item.inputPath);
@@ -227,7 +226,7 @@ module.exports = function(eleventyConfig) {
 
   // Create topTags collection: first 10 tags by article count
   eleventyConfig.addCollection("topTags", function(collectionApi) {
-    const getProjects = require('./_data/projects');
+    const getProjects = require('./src/_data/projects');
     const projSet = new Set();
     try {
       const projects = getProjects();
@@ -279,7 +278,7 @@ module.exports = function(eleventyConfig) {
 
   return {
     dir: {
-      input: ".",
+      input: "src",
       includes: "_includes",
       data: "_data",
       layouts: "_includes/layouts",
