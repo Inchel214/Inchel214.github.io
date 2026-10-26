@@ -173,6 +173,11 @@ a:focus, button:focus {outline:3px solid rgba(96,165,250,0.35);outline-offset:2p
 .post-body pre{background:var(--surface);padding:0.85rem;border-radius:var(--radius);overflow-x:auto;margin:1.2rem 0}
 .post-body pre code{background:none;padding:0}
 
+/* 文章正文内的表格：用 .article-content 限定，仅作用于文章内容，统一左对齐（覆盖浏览器默认的表头居中） */
+.article-content table{border-collapse:collapse;width:100%;margin:1.2rem 0;font-size:0.95rem}
+.article-content th,.article-content td{padding:0.5rem 0.75rem;border:1px solid rgba(255,255,255,0.12);text-align:left;vertical-align:top}
+.article-content th{background:var(--surface);font-weight:600}
+
 /* 文内链接：默认无下划线，悬停/聚焦时显示下划线 */
 .post-body a{color:var(--accent);text-decoration:none}
 .post-body a:hover{ text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:2px }
