@@ -1,6 +1,7 @@
 module.exports = function(eleventyConfig) {
   const fs = require('fs');
   const { execSync } = require('child_process');
+  const markdownIt = require('markdown-it');
 
   // Helper: get last commit date of a file via git, fallback to null
   function gitLastModifiedDate(inputPath) {
@@ -21,6 +22,9 @@ module.exports = function(eleventyConfig) {
   // passthrough copy for global assets and post-local images (markdown sources are not copied)
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy("src/posts/**/*.{png,jpg,jpeg,svg,gif,webp,avif}");
+
+  // 启用 markdown-it 的裸 URL 自动成链（保留 Eleventy 默认 html:true，仅额外开启 linkify）
+  eleventyConfig.setLibrary("md", markdownIt({ html: true, linkify: true }));
 
   // Add small helper filter to render current year in templates
   eleventyConfig.addFilter("year", function() {
